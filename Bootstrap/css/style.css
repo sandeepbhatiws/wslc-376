@@ -1,0 +1,23 @@
+.outer{
+	width: 100%;
+	background: black;
+}
+.header{
+	max-width: 1400px;
+	margin: auto;
+	background-color: red;
+	color: white;
+	padding: 16px;
+	text-align: center;
+	display: flex;
+}
+.header_content{
+	flex-basis: 23%;
+	margin: 1%;
+	background-color: blue;
+	padding: 40px 0px;
+}
+
+.header_color{
+	background-color: red;
+}

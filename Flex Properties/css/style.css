@@ -1,0 +1,77 @@
+*{
+	padding: 0px;
+	margin: 0px;
+}
+a{
+	color: black;
+	text-decoration: none;
+}
+
+.outer{
+	background-image: url('../images/hero-section-bg.svg');
+}
+
+
+.row{
+	width: 1200px;
+	
+/*	border: 1px solid red;*/
+	margin: auto;
+/*	background-color: black;*/
+}
+.heading{
+	color: white;
+	text-align: center;
+	padding: 15px 0px;
+}
+
+.main-column{
+/*	height: 1500px;*/
+	display: flex;
+	/*flex-wrap: wrap;
+	flex-direction: column-reverse;*/
+/*	flex-flow: row-reverse wrap;*/
+	flex-wrap: wrap;
+/*	flex-direction: column;*/
+	justify-content: flex-end;
+	justify-content: center;
+	justify-content: space-between;
+	justify-content: space-around;
+	justify-content: space-evenly;
+	/*align-items: flex-start;
+	align-items: flex-end;
+	align-items: center;*/
+/*	align-items: baseline;*/
+/*	align-items: flex-start;*/
+/*	align-content: flex-end;*/
+	align-content: flex-end;
+	align-content: center;
+	align-content: space-around;
+}
+.column{
+/*	width: 250px;*/
+	
+	flex-basis: 31%;
+/*	flex-grow: 1;*/
+	background-color: white;
+	margin: 1%;
+	padding: 45px;
+	box-sizing: border-box;
+	text-align: center;
+	border-radius: 30px;
+	order: 5;
+}
+.column-content h2{
+	padding: 15px;
+	box-sizing: border-box;
+}
+/*.grow{
+	flex-grow: 6;
+}
+.order{
+	order:3;
+}
+
+.content-self{
+	align-self: center;
+}*/

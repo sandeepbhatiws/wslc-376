@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>If Condition</title>
+    </head>
+    <body>
+
+        <script>
+            var maths = prompt('Enter the marks in maths');
+            var english = prompt('Enter the marks in english');
+            var hindi = prompt('Enter the marks in hindi');
+
+            var outOfMarks = 300;
+            var totalMarks = parseInt(maths) + parseInt(english) + parseInt(hindi);
+            var percentage = ((totalMarks / outOfMarks) * 100).toFixed(2);
+
+
+            document.write('Out Of Marks - '+ outOfMarks);
+            document.write('<br>');
+            document.write('Total Marks - '+ totalMarks);
+            document.write('<br>');
+            document.write('Percentage - '+ percentage+'%');
+            document.write('<br>');
+
+
+            if(maths > 100 || english > 100 || hindi > 100){
+                document.write('Invalid marks');
+            } else if(percentage >= 60){
+                document.write('First Divison');
+            } else if(percentage >= 48 && percentage < 60){
+                document.write('Second Divison');
+            } else if(percentage >= 36 && percentage < 48){
+                document.write('Third Divison');
+            } else {
+                document.write('Failed');
+            }
+
+            
+        </script>
+    </body>
+</html>

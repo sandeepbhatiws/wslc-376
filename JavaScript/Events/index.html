@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <title>Javascript Events</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <div class="row">
+            <button class="button" onclick="onClickEvent()">On Click Event</button>
+            <button class="button" ondblclick="onClickEvent()">On DB Click Event</button>
+
+            <button class="button" onmouseover="onOverMouse()" onmouseout="onOutMouse()" >On Mouse Over /Out</button>
+
+            <button class="button" onmouseenter="onOverMouse()" onmouseleave="onOutMouse()" >On Mouse Enter / Leave</button>
+
+            <button class="button" onmousedown="onOverMouse()" onmouseup="onOutMouse()" >On Mouse Down / Up</button>
+            
+            <button class="button" onmousemove="onMove()">On Mouse Move</button>
+
+            <button class="button" onmousewheel="onMove()">On Mouse Wheel</button>
+
+
+            <!-- <input type="text" onkeydown="getTextValue(this)"/> -->
+            <!-- <input type="text" onkeyup="getTextValue(this)"/> -->
+
+            <!-- <input type="text" onchange="getTextValue(this)"/> -->
+
+            <input type="text" onfocus="getTextValue(this)" onblur="getTextValue(this)" value="Test"/>
+            <!-- <input type="text" onchange="getTextValue(this)"/> -->
+
+
+            <select onchange="getTextValue(this)">
+                <option>India</option>
+                <option>Sri Lanka</option>
+                <option>Canada</option>
+                <option>Aus</option>
+            </select>
+
+
+        </div>
+
+
+    <script src="js/main.js"></script>
+    </body>
+
+</html>

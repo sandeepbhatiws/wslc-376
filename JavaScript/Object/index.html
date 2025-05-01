@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title>Object</title>
+    </head>
+    <body>
+
+        <script>
+            var a = 5;
+            // console.log(a);
+
+            var b = [4,5,6];
+            // console.log(b);
+
+            var c = {
+                email : 'sandeep@gmail.com',
+                name : 'Sandeep',
+                mobile_number : 1234567890,
+                address : {
+                    address_1 : 'India',
+                    address_2 : 'India',
+                }
+            }
+            
+            // console.log(c);
+
+            // console.log(c.name);
+            // console.log(c.email);
+            // console.log(c.mobile_number);
+            // console.log(c.address.address_1);
+
+
+            var userInfo = [{
+                name : 'Divya',
+                email : 'divya@gmail.com',
+                mobile_number : 1234567890,
+                address : [
+                    {
+                        address_1 : 'India'
+                    },
+                    {
+                        address_2 : 'India',
+                    }
+                ]
+            },{
+                email : 'sanjit@gmail.com',
+                name : 'Sanjit'
+            },{
+                mobile_number : 1234567890,
+                name : 'Rahul',
+                email : 'rahul@gmail.com'
+            }];
+
+            // console.log(userInfo[2].name);
+
+            for(var v of userInfo){
+                if(v.mobile_number == '1234567890'){
+                    console.log(v);
+                }
+            }
+
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Transform Scale Properties</title>
+	<style type="text/css">
+		.row{
+			border: 1px solid red;
+			width: 500px;
+			height: 500px;
+			margin: auto;
+		}
+		.column{
+			width: 500px;
+			height: 500px;
+			border: 1px solid black;
+			overflow: hidden;
+			position: relative;
+		}
+		.image1{
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			transition: 5s;
+		}
+		.image2{
+			width: 80%;
+			height: 80%;
+			border-radius: 50%;
+			position: absolute;
+			top: 10%;
+/*			transform: translate(-50%,0px);*/
+			left: 10%;
+			border: 2px solid red;
+			transition: 5s;
+		}
+
+		.column:hover img{
+/*			transform: rotate(-360deg);*/
+		}
+
+
+		.column:hover .image1{
+			transform: rotate(360deg);
+		}
+
+		.column:hover .image2{
+			transform: rotate(-360deg);
+		}
+	</style>
+</head>
+<body>
+
+	<div class="row">
+		<div class="column">
+			<img src="https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg" class="image1">
+			<img src="https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg" class="image2">
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+
+/* Product card hover effects */
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  /* Image styling */
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  /* Rating stars consistency */
+  .fa-star, .fa-star-half-alt {
+    font-size: 14px;
+  }
+  
+  /* Custom button hover effects */
+  .btn-outline-primary:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Price slider styling */
+  .form-range::-webkit-slider-thumb {
+    background: #0d6efd;
+  }
+  
+  .form-range::-moz-range-thumb {
+    background: #0d6efd;
+  }
+  
+  /* Footer links hover effect */
+  footer a:hover {
+    color: #0d6efd !important;
+  }
+  
+  /* Newsletter input focus */
+  footer .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  }
+  

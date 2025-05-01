@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>DOM</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' media='screen' href='css/style.css'>
+        
+    </head>
+    <body>
+        
+        <div class="row">
+            <div class="content" id="content_1">1. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium doloribus distinctio recusandae molestias soluta reprehenderit consequatur, officiis dolores nobis quidem aperiam optio numquam fuga delectus quos similique labore illo eligendi.</div>
+            <div class="content" id="content_2">2. Lorem, ipsum dolor sit amet consectetur adipisicing elit. <b>Accusantium doloribus</b> distinctio recusandae molestias soluta reprehenderit consequatur, officiis dolores nobis quidem aperiam optio numquam fuga delectus quos similique labore illo eligendi.</div>
+            <div class="content" id="content_1">3. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium doloribus distinctio recusandae molestias soluta reprehenderit consequatur, officiis dolores nobis quidem aperiam optio numquam fuga delectus quos similique labore illo eligendi.</div>
+
+        </div>
+
+        <div class="button">
+            <button onclick="getContentById()"> Get Content By Id Name</button>
+            <button onclick="getContentByClassName()"> Get Content By Class Name</button>
+            <button onclick="getContentByTagName()"> Get Content By Tag Name</button>
+            <button onclick="getContentByQuerySelector()"> Get Content By Query Selector</button>
+            <button onclick="getContentByQuerySelectorAll()"> Get Content By Query Selector All</button>
+
+            <button onclick="addCssProperties()">Add Css Properties</button>
+        </div>
+
+        <div class="button">
+            <button onclick="addClassName()">Add Class</button>
+            <button onclick="removeClassname()">Remove Class</button>
+            <button onclick="toggleClassName()">Toggle Class</button>
+        </div>
+
+        <div class="row">
+            <div class="content" id="output"></div>
+        </div>
+        
+
+        <script src='js/custom.js'></script>
+    </body>
+</html>

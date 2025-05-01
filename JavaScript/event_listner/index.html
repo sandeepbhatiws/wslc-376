@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title>Event Listner</title>
+        <style>
+            button{
+                background-color: red;
+                color: white;
+                margin: 15px;
+                padding: 15px;
+                border-radius: 10px;
+                border: 0px;
+                font-weight: bold;
+                font-size: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <button class="button" id="button1">Click Me</button>
+        <button class="button" id="button2">Submit</button>
+        <button class="button" id="button3">Get Me</button>
+
+
+        <form id="user_form">
+            <input type="text" name="first_name" id="first_name" placeholder="Enter your first name"/>
+            <input type="text" name="last_name" placeholder="Enter your last name"/>
+            <button type="submit"> submit </button>
+        </form>
+
+        <script>
+            var data = document.querySelectorAll('.button');
+
+            data.forEach((v,i) => {
+                v.addEventListener('click',(event) => {
+                    console.log(event.target.innerText);
+                })
+            })
+
+
+            // function getValue(){
+            //     console.log('Hello World');
+            // }
+
+            // document.getElementById('button1').addEventListener('click',getValue);
+            // document.getElementById('button2').addEventListener('click',getValue);
+            // document.getElementById('button3').addEventListener('click',getValue);
+
+            // document.getElementById('button1').addEventListener('click',() => {
+            //     console.log('Welcome');
+            // });
+
+
+        </script>
+
+        <script>
+            document.getElementById('user_form').addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                var first_name = document.getElementById('first_name').value;
+                console.log(event.target.last_name.value);
+
+            })
+        </script>
+    </body>
+</html>

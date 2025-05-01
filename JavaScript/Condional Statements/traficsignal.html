@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>If Condition</title>
+    </head>
+    <body>
+
+        <script>
+            var signal = prompt('Enter the signal (red, green, yellow)');
+
+            console.log(signal.length);
+
+            signal = signal.toLowerCase().trim();
+
+            if(signal == 'red'){
+                document.write('Red Signal');
+            } else if(signal == 'green'){
+                document.write('Green Signal');
+            } else if(signal == 'yellow'){
+                document.write('Yellow Signal');
+            } else {
+                document.write('Invalid Value');
+            }
+
+            
+        </script>
+    </body>
+</html>

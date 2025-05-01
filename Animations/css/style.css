@@ -1,0 +1,136 @@
+*{
+	padding: 0px;
+	margin: 0px;
+}
+.outer_button{
+	padding: 25px;
+	text-align: center;
+}
+
+@keyframes colorChange{
+	from{
+		background: blue;
+	}
+	to{
+		background: orange;
+	}
+}
+
+/*@keyframes colorChange{
+	0%{
+		background: blue;
+	}
+	50%{
+		background: red;
+	}
+	100%{
+		background: orange;
+	}
+}*/
+
+.button{
+	background: black;
+	border: 0px;
+	box-shadow: 0px 0px 5px 3px gray;
+	padding: 10px 25px;
+	color: white;
+	border-radius: 15px;
+	font-size: 22px;
+	animation: colorChange;
+	animation-duration: 3s;
+	animation-iteration-count: infinite;
+}
+.outer_image{
+	text-align: center;
+	margin-top: 30px;
+}
+
+@keyframes imageChange{
+	0%{
+		background-image: url('../images/category1.jpg');
+	}
+	20%{
+		background-image: url('../images/category2.jpg');
+	}
+	40%{
+		background-image: url('../images/category3.jpg');
+	}
+	60%{
+		background-image: url('../images/category4.jpg');
+	}
+	80%{
+		background-image: url('../images/category5.jpg');
+	}
+	100%{
+		background-image: url('../images/category6.jpg');
+	}
+}
+
+.image{
+	background-image: url('../images/1.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 300px;
+	margin: auto;
+	height: 400px;
+	box-shadow: 0px 0px 5px 2px #F9ECF3;
+	animation: imageChange;
+	animation-duration: 12s;
+	animation-iteration-count: infinite;
+/*	animation-delay: 5s;*/
+	animation-timing-function: linear;
+	animation-direction: reverse;
+}
+
+.image_slider{
+	margin-top: 30px;
+	margin-bottom: 100px;
+	border: 1px solid black;
+	position: relative;
+	height: 280px;
+	overflow: hidden;
+	width: 215px;
+	margin: auto;
+}
+
+@keyframes imageMove{
+	0%{
+		left: -1075px;
+	}
+	20%{
+		left: -860px;
+	}
+	40%{
+		left: -645px;
+	}
+	60%{
+		left: -430px;
+	}
+	80%{
+		left: -215px;
+	}
+	100%{
+		left: 0px;
+	}
+}
+
+
+.images{
+	width: 215px;
+	height: 280px;
+	border: 1px solid black;
+	animation: imageMove;
+	animation-duration: 12s;
+	animation-iteration-count: infinite;
+/*	overflow: hidden;*/
+	
+	display: flex;
+	position: absolute;
+	animation-timing-function: linear;
+	top: 0px;
+	left: -1075px;
+}
+.image_slider img{
+	width: 215px;
+	height: 280px;
+}
