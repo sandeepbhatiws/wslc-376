@@ -4,20 +4,13 @@ import Header from './Common/Header'
 import DiscoverProduct from './DiscoverProduct'
 import Footer from './Common/Footer'
 import ProductListing from './ProductListing'
+import { ToastContainer } from 'react-toastify'
 
 export default function Product() {
-
-    const getData = () => {
-        console.log('Hello');
-    }
-
-    useEffect(() => {
-        getData();
-    },[]);  // [] means blank dependencies
-
     
     return (
         <>
+            <ToastContainer/>
             <Header />
             <DiscoverProduct />
             <ProductListing />
