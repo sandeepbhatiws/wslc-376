@@ -9,6 +9,24 @@ export default function ProductListing() {
   let [brands, setBrands] = useState([]);
   let [products, setProducts] = useState([]);
   let [sortBy, setSortBy] = useState('');
+  let [filterCategoryValue, setFilterCategoryValue] = useState([]);
+
+  const filterCategories = (slug) => {
+    if(filterCategoryValue.includes(slug)){
+      var finalData = filterCategoryValue.filter((v) => {
+        if(v != slug){
+          return v
+        }
+      })
+      var finalData = [...finalData];
+      setFilterCategoryValue(finalData);
+    } else {
+      const finalData = [...filterCategoryValue, slug];
+      setFilterCategoryValue(finalData);
+    }
+
+    console.log(filterCategoryValue);
+  }
 
   useEffect(() => {
     axios.get('https://wscubetech.co/ecommerce-api/categories.php')
@@ -34,7 +52,8 @@ export default function ProductListing() {
     axios.get('https://wscubetech.co/ecommerce-api/products.php', {
       params : {
         limit : 12,
-        sorting : sortBy
+        sorting : sortBy,
+        categories : filterCategoryValue.toString()
       }
     })
       .then((results) => {
@@ -43,7 +62,7 @@ export default function ProductListing() {
       .catch((error) => {
         toast.error('Something went wrong. Please try again !');
       })
-  }, [sortBy]);
+  }, [sortBy, filterCategoryValue]);
 
   const filterSorting = (event) => {
     setSortBy(event.target.value);
@@ -77,13 +96,17 @@ export default function ProductListing() {
                 {/* <!-- Categories Filter --> */}
                 <div class="mb-4 category-scroll">
                   <h6 class="fw-bold mb-3">Categories</h6>
-
                   {
+                    (categories.length > 0)
+                    ?
                     categories.map((v, i) => {
                       return (
-                        <DisplayCategories key={i} category={v} />
+                        <DisplayCategories filterCategories={filterCategories} key={i} category={v} />
                       )
                     })
+
+                    :
+                    ''
                   }
                 </div>
 
@@ -91,11 +114,16 @@ export default function ProductListing() {
                 <div class="mb-4 category-scroll">
                   <h6 class="fw-bold mb-3">Brands</h6>
                   {
+                    (brands.length > 0)
+                    ?
                     brands.map((v, i) => {
                       return (
                         <DisplayBrands key={i} brand={v} />
                       )
                     })
+
+                    :
+                    ''
                   }
                 </div>
 
@@ -136,11 +164,16 @@ export default function ProductListing() {
                 <div class="mb-4">
                   <h6 class="fw-bold mb-3">Categories</h6>
                   {
+                    (categories.length > 0)
+                    ?
                     categories.map((v, i) => {
                       return (
-                        <DisplayCategories key={i} category={v} />
+                        <DisplayCategories filterCategories={filterCategories} key={i} category={v} />
                       )
                     })
+
+                    :
+                    ''
                   }
 
                 </div>
@@ -149,11 +182,16 @@ export default function ProductListing() {
                 <div class="mb-4">
                   <h6 class="fw-bold mb-3">Brands</h6>
                   {
+                    (brands.length > 0)
+                    ?
                     brands.map((v, i) => {
                       return (
                         <DisplayBrands key={i} brand={v} />
                       )
                     })
+
+                    :
+                    ''
                   }
                 </div>
 
@@ -193,7 +231,7 @@ export default function ProductListing() {
               <div class="card-body">
                 <div class="row align-items-center">
                   <div class="col-md-6 mb-2 mb-md-0">
-                    <h6 class="mb-0">12 Products</h6>
+                    <h6 class="mb-0">{ products.length } Products</h6>
                     <small class="text-muted">Filtered results</small>
                   </div>
                   <div class="col-md-6">
@@ -222,11 +260,16 @@ export default function ProductListing() {
               {/* <!-- Product 1 --> */}
 
               {
+                (products.length > 0)
+                ?
                 products.map((v, i) => {
                   return (
                     <ProductCard key={i} product={v}/>
                   )
                 })
+
+                :
+                ''
               }
             </div>
           </div>
@@ -237,10 +280,10 @@ export default function ProductListing() {
 }
 
 
-function DisplayCategories({ category }) {
+function DisplayCategories({ category, filterCategories }) {
   return (
     <div class="form-check mb-2">
-      <input class="form-check-input" type="checkbox" id={`${'category_' + category.id}`} />
+      <input class="form-check-input" type="checkbox" id={`${'category_' + category.id}`}  onClick={ () => filterCategories(category.slug) }/>
       <label class="form-check-label" for={`${'category_' + category.id}`}>{category.name}</label>
     </div>
   )
