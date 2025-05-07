@@ -10,6 +10,8 @@ export default function ProductListing() {
   let [products, setProducts] = useState([]);
   let [sortBy, setSortBy] = useState('');
   let [filterCategoryValue, setFilterCategoryValue] = useState([]);
+  let [priceFrom, setPriceFrom] = useState(0);
+  let [priceTo, setPriceTo] = useState(100000);
 
   const filterCategories = (slug) => {
     if(filterCategoryValue.includes(slug)){
@@ -53,7 +55,9 @@ export default function ProductListing() {
       params : {
         limit : 12,
         sorting : sortBy,
-        categories : filterCategoryValue.toString()
+        categories : filterCategoryValue.toString(),
+        price_from : priceFrom,
+        price_to : priceTo
       }
     })
       .then((results) => {
@@ -62,10 +66,23 @@ export default function ProductListing() {
       .catch((error) => {
         toast.error('Something went wrong. Please try again !');
       })
-  }, [sortBy, filterCategoryValue]);
+  }, [sortBy, filterCategoryValue, priceFrom, priceTo]);
 
   const filterSorting = (event) => {
     setSortBy(event.target.value);
+  }
+
+  const rangePrice = (event) => {
+    setPriceTo(event.target.value);
+    console.log(priceTo);
+  }
+
+  const priceFromFilter = (event) => {
+    setPriceFrom(event.target.value);
+  }
+
+  const priceToFilter = (event) => {
+    setPriceTo(event.target.value);
   }
 
   return (
@@ -132,20 +149,21 @@ export default function ProductListing() {
                   <h6 class="fw-bold mb-3">Price Range</h6>
                   <div class="d-flex justify-content-between mb-2">
                     <span>$0</span>
-                    <span>$1500</span>
+                    <span>$100000</span>
                   </div>
-                  <input type="range" class="form-range" min="0" max="1500" step="10" id="priceRange" />
+                  <input type="range" onChange={ rangePrice } class="form-range" min="0" max="100000" step="1000" id="priceRange" />
+
                   <div class="row g-2 mt-2">
                     <div class="col-6">
                       <div class="input-group input-group-sm">
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" placeholder="Min" min="0" />
+                        <input type="number" class="form-control" placeholder="Min" min="0"  onChange={ priceFromFilter }/>
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="input-group input-group-sm">
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" placeholder="Max" min="0" />
+                        <input type="number" class="form-control" placeholder="Max" min="0" onChange={ priceToFilter }/>
                       </div>
                     </div>
                   </div>
