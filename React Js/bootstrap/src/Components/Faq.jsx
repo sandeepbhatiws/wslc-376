@@ -11,8 +11,6 @@ export default function Faq() {
 
     return (
         <>
-            <Header />
-
             <div className='container-fluid p-5'>
                 <div className='container'>
                     <div className='row'>
@@ -35,7 +33,6 @@ export default function Faq() {
                     </div>
                 </div>
             </div>
-            <Footer />
         </>
     )
 }

@@ -5,8 +5,6 @@ import Footer from './Common/Footer'
 export default function Home() {
   return (
     <>
-        <Header/>
-
         <div className='container-fluid p-5'>
             <div className='container'>
                 <div className='row'>
@@ -16,7 +14,6 @@ export default function Home() {
                 </div>
             </div>
         </div>
-        <Footer/>
     </>
   )
 }

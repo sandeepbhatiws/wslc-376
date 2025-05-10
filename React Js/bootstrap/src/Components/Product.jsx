@@ -10,11 +10,8 @@ export default function Product() {
     
     return (
         <>
-            <ToastContainer/>
-            <Header />
             <DiscoverProduct />
             <ProductListing />
-            <Footer />
         </>
     )
 }
