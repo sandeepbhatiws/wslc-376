@@ -5,7 +5,6 @@ import { ToastContainer } from 'react-toastify'
 export default function Header() {
   return (
     <>
-      <ToastContainer/>
       {/* <!-- Header --> */}
     <header class="sticky-top bg-white border-bottom shadow-sm">
       <div class="container py-3">
