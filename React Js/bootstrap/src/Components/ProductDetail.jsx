@@ -8,19 +8,22 @@ export default function ProductDetail() {
     const params = useParams();
 
     let [productDetails, setProductDetails] = useState('');
+    let [currentImage, setCurrentImage] = useState('');
 
     useEffect(() => {
         axios.get('https://wscubetech.co/ecommerce-api/productdetails.php?id=' + params.id)
             .then((response) => {
                 setProductDetails(response.data.product)
-                console.log(response.data);
+                setCurrentImage(response.data.product.multiple_images[0])
             })
             .catch((error) => {
                 toast.error('Something went wrong !!');
             })
     }, []);
 
-    console.log(params);
+    const changeImage = (i) => {
+        setCurrentImage(i);
+    }
 
     return (
         <>
@@ -38,12 +41,12 @@ export default function ProductDetail() {
                             <div class="row">
                         <div class="col-md-5">
                             <div class="main-img">
-                                <img class="img-fluid" src={productDetails.multiple_images[0]} alt="ProductS" />
+                                <img class="img-fluid" src={currentImage} alt="ProductS" />
                                 <div class="row my-3 previews">
                                     {
                                         productDetails.multiple_images.map((v,i) => {
                                             return(
-                                                <div class="col-md-3">
+                                                <div class="col-md-3" onMouseEnter={ () => changeImage(v) }>
                                                     <img class="w-100" src={v} alt="Sale" />
                                                 </div>
                                             )

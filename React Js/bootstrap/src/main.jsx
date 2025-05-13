@@ -10,6 +10,7 @@ import Faq from './Components/Faq';
 import { BrowserRouter, Routes, Route } from "react-router";
 import RootLayout from './Components/RootLayout';
 import ProductDetail from './Components/ProductDetail';
+import Context from './Context API/Context';
 
 // const router = createBrowserRouter([
 //   {
@@ -38,17 +39,19 @@ import ProductDetail from './Components/ProductDetail';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <Routes>
 
-      <Route element={ <RootLayout /> }>
-        <Route path="/" element={<Home />} />
-        <Route path="faqs" element={<Faq />} />
-        <Route path="products" element={<Product />} />
-        <Route path="product/product-details/:id" element={<ProductDetail />} />
-        <Route path="/contact-us" element={<Contact />} />
-      </Route>
+    <Context>
+      <Routes>
+        <Route element={ <RootLayout /> }>
+          <Route path="/" element={<Home />} />
+          <Route path="faqs" element={<Faq />} />
+          <Route path="products" element={<Product />} />
+          <Route path="product/product-details/:id" element={<ProductDetail />} />
+          <Route path="/contact-us" element={<Contact />} />
+        </Route>
+      </Routes>
+    </Context>
 
-      
-    </Routes>
+    
   </BrowserRouter>,
 )
