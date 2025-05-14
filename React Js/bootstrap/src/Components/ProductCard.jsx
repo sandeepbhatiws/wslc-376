@@ -1,10 +1,47 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { cartContext } from '../Context API/Context';
+import { toast } from 'react-toastify';
 
 export default function ProductCard({product}) {
 
+    let { cartItems, setCartItems} = useContext(cartContext);
+
     var discount_price = (product.price * product.discount_percentage)/100;
     var discount_price = product.price - discount_price;
+
+    const addToCart = (productInfo) => {
+
+        var discount_price = (productInfo.price * productInfo.discount_percentage)/100;
+        var discount_price = productInfo.price - discount_price;
+
+        const checkProduct = cartItems.filter((v) => {
+            if(productInfo.id == v.id){
+                return v;
+            }
+        })
+
+        if(checkProduct.length > 0){
+            console.log('Yes');
+        } else {
+            const info = {
+                id : productInfo.id,
+                name : productInfo.name,
+                image : productInfo.image,
+                price : productInfo.price,
+                discount_price : discount_price,
+                quantity : 1
+            }
+
+            const finalData = [info, ...cartItems];
+            setCartItems(finalData);
+            toast.success('Add to cart succussfully !')
+        }
+
+
+        
+    }
+
 
     return (
         <>
@@ -35,7 +72,7 @@ export default function ProductCard({product}) {
                                 <span class="fs-5 fw-bold">Rs. {discount_price}</span>
                                 <span class="text-decoration-line-through text-muted ms-2">Rs. {product.price}</span>
                             </div>
-                            <button class="btn btn-sm btn-outline-primary">
+                            <button class="btn btn-sm btn-outline-primary" onClick={ () => addToCart(product) }>
                                 <i class="fa fa-shopping-cart"></i>
                             </button>
                         </div>

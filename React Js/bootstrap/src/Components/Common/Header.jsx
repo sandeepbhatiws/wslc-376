@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import { cartContext } from '../../Context API/Context';
 
 export default function Header() {
+
+  let { cartItems } = useContext(cartContext);
+
   return (
     <>
       {/* <!-- Header --> */}
@@ -37,7 +41,7 @@ export default function Header() {
               <a href="#" class="btn btn-link text-dark position-relative">
                 <i class="fa fa-shopping-cart"></i>
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  2
+                  { cartItems.length }
                 </span>
               </a>
             </div>
