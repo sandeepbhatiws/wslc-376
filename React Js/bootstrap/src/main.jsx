@@ -6,11 +6,13 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Product from './Components/Product';
 import Contact from './Components/Contact';
 import Faq from './Components/Faq';
+import './assets/css/style.css';
 
 import { BrowserRouter, Routes, Route } from "react-router";
 import RootLayout from './Components/RootLayout';
 import ProductDetail from './Components/ProductDetail';
 import Context from './Context API/Context';
+import ViewCart from './Components/ViewCart';
 
 // const router = createBrowserRouter([
 //   {
@@ -48,6 +50,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="products" element={<Product />} />
           <Route path="product/product-details/:id" element={<ProductDetail />} />
           <Route path="/contact-us" element={<Contact />} />
+          <Route path="/view-carts" element={<ViewCart />} />
         </Route>
       </Routes>
     </Context>

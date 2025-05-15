@@ -4,7 +4,10 @@ const cartContext = createContext();
 
 export default function Context({children}) {
 
-    let [cartItems, setCartItems] = useState([]);
+    var cartData = localStorage.getItem('cartItems');
+    var cartData = JSON.parse(cartData);
+
+    let [cartItems, setCartItems] = useState(cartData ?? []);
     let [wishlistItems, setWishlistItems] = useState([]);
 
     const data = { cartItems, setCartItems, wishlistItems, setWishlistItems }

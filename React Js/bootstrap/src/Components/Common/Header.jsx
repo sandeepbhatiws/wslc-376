@@ -38,12 +38,12 @@ export default function Header() {
               <a href="#" class="btn btn-link text-dark position-relative">
                 <i class="fa fa-user"></i>
               </a>
-              <a href="#" class="btn btn-link text-dark position-relative">
+              <Link to="/view-carts" class="btn btn-link text-dark position-relative">
                 <i class="fa fa-shopping-cart"></i>
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                   { cartItems.length }
                 </span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

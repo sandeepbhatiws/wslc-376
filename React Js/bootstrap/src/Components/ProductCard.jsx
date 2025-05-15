@@ -22,7 +22,25 @@ export default function ProductCard({product}) {
         })
 
         if(checkProduct.length > 0){
-            console.log('Yes');
+            var finalData = cartItems.map((v) => {
+                if(productInfo.id == v.id){
+                    if(v.quantity < 10){
+                        v.quantity++;
+                        toast.success('Update cart succussfully !')
+                        return v;
+                    } else {
+                        toast.error('maximum quantity reached !')
+                        return v;
+                    }  
+                } else {
+                    return v;
+                }
+            })
+
+            var finalData = [...finalData];
+            setCartItems(finalData);
+            localStorage.setItem('cartItems',JSON.stringify(finalData));
+
         } else {
             const info = {
                 id : productInfo.id,
@@ -36,6 +54,7 @@ export default function ProductCard({product}) {
             const finalData = [info, ...cartItems];
             setCartItems(finalData);
             toast.success('Add to cart succussfully !')
+            localStorage.setItem('cartItems',JSON.stringify(finalData));
         }
 
 
