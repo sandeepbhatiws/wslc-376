@@ -1,9 +1,77 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { cartContext } from '../Context API/Context'
+import { toast } from 'react-toastify';
 
 export default function ViewCart() {
 
     const { cartItems, setCartItems } = useContext(cartContext);
+    const [cartTotal, setCartTotal] = useState(0);
+
+    useEffect(() => {
+        var sum = 0;
+
+        cartItems.forEach((v) => {
+            sum += v.discount_price * v.quantity;
+        })
+
+        setCartTotal(sum)
+
+    },[cartItems]);
+
+
+    const updateCart = (id, qty, type) => {
+        console.log(id);
+        console.log(qty);
+        console.log(type);
+
+        if(type == 'plus'){
+            if(qty < 15){
+                var finalData = cartItems.map((v) => {
+                    if(id == v.id){
+                        v.quantity++;
+                        toast.success('Update cart succussfully !')
+                        return v;
+                    } else {
+                        return v;
+                    }
+                })
+                var finalData = [...finalData];
+                setCartItems(finalData);
+                localStorage.setItem('cartItems',JSON.stringify(finalData));
+            } else {
+                toast.error('maximum quantity reached !')
+            }
+        } else {
+            if(qty > 1){
+                var finalData = cartItems.map((v) => {
+                    if(id == v.id){
+                        v.quantity--;
+                        toast.success('Update cart succussfully !')
+                        return v;
+                    } else {
+                        return v;
+                    }
+                })
+                var finalData = [...finalData];
+                setCartItems(finalData);
+                localStorage.setItem('cartItems',JSON.stringify(finalData));
+            }
+        }
+    }
+
+    const deleteProduct = (product_id) => {
+        if(confirm('Are you sure you want to delete ?')){
+            const finalData = cartItems.filter((v) => {
+                if(product_id != v.id){
+                    return v;
+                }
+            })
+            setCartItems([...finalData]);
+            localStorage.setItem('cartItems', JSON.stringify(finalData))
+        }
+        
+    }
+
 
     return (
         <>
@@ -36,7 +104,7 @@ export default function ViewCart() {
 
                                                             <div>
                                                                 <div>
-                                                                    {v.quantity * v.discount_price}
+                                                                    {(v.quantity * v.discount_price).toFixed(2)}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -44,23 +112,13 @@ export default function ViewCart() {
                                                     <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                         <div class="d-flex justify-content-between">
                                                             <div>
-                                                                <select class="form-select">
-                                                                    <option value="1" 
-                                                                    selected={v.quantity == 1 ? 'selected' : ''}>1</option>
-                                                                    <option value="2" selected={v.quantity == 2 ? 'selected' : ''}>2</option>
-                                                                    <option value="3"
-                                                                    selected={v.quantity == 3 ? 'selected' : ''}>3</option>
-                                                                    <option value="4" selected={v.quantity == 4 ? 'selected' : ''}>4</option>
-                                                                    <option value="5" selected={v.quantity == 5 ? 'selected' : ''}>5</option>
-                                                                    <option value="6">6</option>
-                                                                    <option value="7">7</option>
-                                                                    <option value="8">8</option>
-                                                                    <option value="9">9</option>
-                                                                    <option value="10">10</option>
-                                                                </select>
+                                                                <button 
+                                                                onClick={() => updateCart(v.id,v.quantity, 'plus') } >+</button>
+                                                                <button>{v.quantity}</button>
+                                                                <button onClick={() => updateCart(v.id,v.quantity, 'minus') }>-</button>
                                                             </div>
                                                             <div>
-                                                                <button
+                                                                <button onClick={ () => deleteProduct(v.id) }
                                                                     type="button"
                                                                     class="btn-close"
                                                                     aria-label="Close"
@@ -83,7 +141,7 @@ export default function ViewCart() {
                                 <h6 class="mb-4">Order Summary</h6>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>Subtotal</div>
-                                    <div><strong>Rs. 5000</strong></div>
+                                    <div><strong>Rs. {cartTotal.toFixed(2) }</strong></div>
                                 </div>
                                 <hr />
                                 <div class="d-flex justify-content-between align-items-center">
@@ -93,7 +151,7 @@ export default function ViewCart() {
                                 <hr />
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>Total</div>
-                                    <div><strong>Rs.5100</strong></div>
+                                    <div><strong>Rs.{ (cartTotal + 100).toFixed(2) }</strong></div>
                                 </div>
                                 <button class="btn btn-primary w-100 mt-4">Checkout</button>
                             </div>
