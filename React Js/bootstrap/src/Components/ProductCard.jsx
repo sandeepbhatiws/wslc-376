@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { cartContext } from '../Context API/Context';
 import { toast } from 'react-toastify';
+import { getDatabase, ref, set } from "firebase/database";
+import app from '../config/firebase';
 
 export default function ProductCard({product}) {
 
@@ -51,10 +53,15 @@ export default function ProductCard({product}) {
                 quantity : 1
             }
 
+            const db = getDatabase(app);
+            set(ref(db, 'users/' + Date.now()), info);
+
             const finalData = [info, ...cartItems];
             setCartItems(finalData);
             toast.success('Add to cart succussfully !')
             localStorage.setItem('cartItems',JSON.stringify(finalData));
+
+            
         }
 
 
