@@ -13,6 +13,7 @@ import RootLayout from './Components/RootLayout';
 import ProductDetail from './Components/ProductDetail';
 import Context from './Context API/Context';
 import ViewCart from './Components/ViewCart';
+import LoginRegister from './Components/LoginRegister';
 
 // const router = createBrowserRouter([
 //   {
@@ -51,6 +52,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="product/product-details/:id" element={<ProductDetail />} />
           <Route path="/contact-us" element={<Contact />} />
           <Route path="/view-carts" element={<ViewCart />} />
+          <Route path="/login-register" element={<LoginRegister />} />
         </Route>
       </Routes>
     </Context>

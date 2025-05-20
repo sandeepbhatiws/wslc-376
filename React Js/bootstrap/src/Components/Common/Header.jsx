@@ -1,11 +1,18 @@
 import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { cartContext } from '../../Context API/Context';
 
 export default function Header() {
 
   let { cartItems } = useContext(cartContext);
+  var userId = localStorage.getItem('uid');
+  let navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem('uid');
+    navigate('/');
+  }
 
   return (
     <>
@@ -35,9 +42,19 @@ export default function Header() {
             <div class="d-flex justify-content-end align-items-center">
               <Link to="/products" class="btn btn-link text-dark d-none d-md-inline-block">Categories</Link>
               <a href="#" class="btn btn-link text-dark d-none d-md-inline-block">Deals</a>
-              <a href="#" class="btn btn-link text-dark position-relative">
+
+              {
+                userId
+                ?
+                <a class="btn btn-link text-dark d-none d-md-inline-block" onClick={logout}>Logout</a>
+                :
+                ''
+              }
+              
+
+              <Link to="/login-register" class="btn btn-link text-dark position-relative">
                 <i class="fa fa-user"></i>
-              </a>
+              </Link>
               <Link to="/view-carts" class="btn btn-link text-dark position-relative">
                 <i class="fa fa-shopping-cart"></i>
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
