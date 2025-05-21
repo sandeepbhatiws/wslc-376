@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { cartContext } from '../Context API/Context'
 import { toast } from 'react-toastify';
+import app from '../config/firebase';
+import { getDatabase, ref, set } from "firebase/database";
 
 export default function ViewCart() {
 
@@ -20,9 +22,7 @@ export default function ViewCart() {
 
 
     const updateCart = (id, qty, type) => {
-        console.log(id);
-        console.log(qty);
-        console.log(type);
+        var userId = localStorage.getItem('uid');
 
         if(type == 'plus'){
             if(qty < 15){
@@ -38,6 +38,12 @@ export default function ViewCart() {
                 var finalData = [...finalData];
                 setCartItems(finalData);
                 localStorage.setItem('cartItems',JSON.stringify(finalData));
+
+                if(userId){
+                    const db = getDatabase(app);
+                    set(ref(db, 'user_carts/' + userId), finalData);
+                }
+
             } else {
                 toast.error('maximum quantity reached !')
             }
@@ -55,11 +61,18 @@ export default function ViewCart() {
                 var finalData = [...finalData];
                 setCartItems(finalData);
                 localStorage.setItem('cartItems',JSON.stringify(finalData));
+
+                if(userId){
+                    const db = getDatabase(app);
+                    set(ref(db, 'user_carts/' + userId), finalData);
+                }
             }
         }
     }
 
     const deleteProduct = (product_id) => {
+        var userId = localStorage.getItem('uid');
+
         if(confirm('Are you sure you want to delete ?')){
             const finalData = cartItems.filter((v) => {
                 if(product_id != v.id){
@@ -68,6 +81,11 @@ export default function ViewCart() {
             })
             setCartItems([...finalData]);
             localStorage.setItem('cartItems', JSON.stringify(finalData))
+
+            if(userId){
+                const db = getDatabase(app);
+                set(ref(db, 'user_carts/' + userId), finalData);
+            }
         }
         
     }

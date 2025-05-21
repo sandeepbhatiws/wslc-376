@@ -13,6 +13,7 @@ export default function ProductCard({product}) {
     var discount_price = product.price - discount_price;
 
     const addToCart = (productInfo) => {
+        var userId = localStorage.getItem('uid');
 
         var discount_price = (productInfo.price * productInfo.discount_percentage)/100;
         var discount_price = productInfo.price - discount_price;
@@ -43,6 +44,11 @@ export default function ProductCard({product}) {
             setCartItems(finalData);
             localStorage.setItem('cartItems',JSON.stringify(finalData));
 
+            if(userId){
+                const db = getDatabase(app);
+                set(ref(db, 'user_carts/' + userId), finalData);
+            }
+
         } else {
             const info = {
                 id : productInfo.id,
@@ -53,19 +59,16 @@ export default function ProductCard({product}) {
                 quantity : 1
             }
 
-            const db = getDatabase(app);
-            set(ref(db, 'users/' + Date.now()), info);
-
             const finalData = [info, ...cartItems];
             setCartItems(finalData);
             toast.success('Add to cart succussfully !')
             localStorage.setItem('cartItems',JSON.stringify(finalData));
 
-            
+            if(userId){
+                const db = getDatabase(app);
+                set(ref(db, 'user_carts/' + userId), finalData);
+            }
         }
-
-
-        
     }
 
 
