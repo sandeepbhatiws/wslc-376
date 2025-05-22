@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import app from '../config/firebase';
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, onValue  } from "firebase/database";
 
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -37,9 +37,16 @@ export default function LoginRegister() {
             localStorage.setItem('uid',user.uid);
             toast.success('User login succussfully !')
 
-            const cartData = JSON.parse(localStorage.getItem('cartItems'));
             const db = getDatabase(app);
-            set(ref(db, 'user_carts/' + user.uid), cartData);
+            const getUserCarts = ref(db, 'user_carts/' + user.uid);
+            onValue(getUserCarts, (cart) => {
+                const data = cart.val();
+                localStorage.setItem('cartItems', JSON.stringify(data));
+            });
+
+            // const cartData = JSON.parse(localStorage.getItem('cartItems'));
+            // const db = getDatabase(app);
+            // set(ref(db, 'user_carts/' + user.uid), cartData);
 
             navigate('/');
         })
@@ -68,9 +75,12 @@ export default function LoginRegister() {
             localStorage.setItem('uid',user.uid);
             toast.success('User register succussfully !')
 
-            const cartData = JSON.parse(localStorage.getItem('cartItems'));
             const db = getDatabase(app);
-            set(ref(db, 'user_carts/' + user.uid), cartData);
+            const getUserCarts = ref(db, 'user_carts/' + user.uid);
+            onValue(getUserCarts, (cart) => {
+                const data = cart.val();
+                localStorage.setItem('cartItems', JSON.stringify(data));
+            });
 
             navigate('/');
 
@@ -102,9 +112,12 @@ export default function LoginRegister() {
             localStorage.setItem('uid',user.uid);
             toast.success('User login succussfully !')
 
-            const cartData = JSON.parse(localStorage.getItem('cartItems'));
             const db = getDatabase(app);
-            set(ref(db, 'user_carts/' + user.uid), cartData);
+            const getUserCarts = ref(db, 'user_carts/' + user.uid);
+            onValue(getUserCarts, (cart) => {
+                const data = cart.val();
+                localStorage.setItem('cartItems', JSON.stringify(data));
+            });
 
             navigate('/');
 

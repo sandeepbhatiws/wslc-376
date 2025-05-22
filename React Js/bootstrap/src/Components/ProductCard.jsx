@@ -15,6 +15,11 @@ export default function ProductCard({product}) {
     const addToCart = (productInfo) => {
         var userId = localStorage.getItem('uid');
 
+        if(!userId){
+            toast.error('Login First !');
+            return false;
+        }
+
         var discount_price = (productInfo.price * productInfo.discount_percentage)/100;
         var discount_price = productInfo.price - discount_price;
 
