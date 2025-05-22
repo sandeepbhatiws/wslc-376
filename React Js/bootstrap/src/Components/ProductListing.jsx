@@ -85,6 +85,11 @@ export default function ProductListing() {
     setPriceTo(event.target.value);
   }
 
+  const clearAll = () => {
+    // console.log('Hello');
+    setFilterCategoryValue([]);
+  }
+
   return (
     <>
       {/* <!-- Main Content --> */}
@@ -107,7 +112,7 @@ export default function ProductListing() {
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <h5 class="card-title mb-0">Filters</h5>
-                  <button class="btn btn-sm btn-link text-decoration-none p-0">Clear All</button>
+                  <button onClick={ clearAll } class="btn btn-sm btn-link text-decoration-none p-0">Clear All</button>
                 </div>
 
                 {/* <!-- Categories Filter --> */}
@@ -118,7 +123,7 @@ export default function ProductListing() {
                     ?
                     categories.map((v, i) => {
                       return (
-                        <DisplayCategories filterCategories={filterCategories} key={i} category={v} />
+                        <DisplayCategories filterCategoryValue={filterCategoryValue} filterCategories={filterCategories} key={i} category={v} />
                       )
                     })
 
@@ -186,7 +191,7 @@ export default function ProductListing() {
                     ?
                     categories.map((v, i) => {
                       return (
-                        <DisplayCategories filterCategories={filterCategories} key={i} category={v} />
+                        <DisplayCategories filterCategoryValue={filterCategoryValue} filterCategories={filterCategories} key={i} category={v} />
                       )
                     })
 
@@ -298,10 +303,10 @@ export default function ProductListing() {
 }
 
 
-function DisplayCategories({ category, filterCategories }) {
+function DisplayCategories({ category, filterCategories, filterCategoryValue }) {
   return (
     <div class="form-check mb-2">
-      <input class="form-check-input" type="checkbox" id={`${'category_' + category.id}`}  onClick={ () => filterCategories(category.slug) }/>
+      <input class="form-check-input" type="checkbox" id={`${'category_' + category.id}`} checked={ filterCategoryValue.includes(category.slug) ? "checked" : ''  }   onClick={ () => filterCategories(category.slug) }/>
       <label class="form-check-label" for={`${'category_' + category.id}`}>{category.name}</label>
     </div>
   )
