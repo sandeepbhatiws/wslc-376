@@ -27,7 +27,7 @@ export default function ProductListing() {
       setFilterCategoryValue(finalData);
     }
 
-    console.log(filterCategoryValue);
+    console.log(slug);
   }
 
   useEffect(() => {
