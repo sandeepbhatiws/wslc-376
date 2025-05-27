@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import {
     Dialog,
@@ -15,6 +15,11 @@ import {
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import ProductCard from './ProductCard'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+
+import ResponsivePagination from 'react-responsive-pagination';
+import 'react-responsive-pagination/themes/classic-light-dark.css';
 
 const sortOptions = [
     { name: 'Most Popular', href: '#', current: true },
@@ -75,6 +80,28 @@ function classNames(...classes) {
 export default function ProductLisitng() {
 
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+
+    const [products, setProducts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+
+    useEffect(() => {
+        axios.get('https://wscubetech.co/ecommerce-api/products.php', {
+            params: {
+                page : currentPage,
+                limit: 12,
+                categories: ''
+            }
+        })
+            .then((result) => {
+                setProducts(result.data.data)
+                setTotalPages(result.data.total_pages)
+            })
+            .catch((error) => {
+                toast.error('Something went wrong !');
+            })
+    }, [currentPage]);
+
 
     return (
         <>
@@ -310,9 +337,24 @@ export default function ProductLisitng() {
 
                                 {/* Product grid */}
                                 <div className="lg:col-span-3">
-                                    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 ">
-                                        <ProductCard/>
+                                    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 mb-9">
+
+                                        {
+                                            products.map((items, index) => {
+                                                return(
+                                                    <ProductCard key={index} item={items} />
+                                                )
+                                            })
+                                        }
+
+                                        
                                     </div>
+
+                                    <ResponsivePagination
+                                            current={currentPage}
+                                            total={totalPages}
+                                            onPageChange={setCurrentPage}
+                                            />
                                 </div>
                             </div>
                         </section>
