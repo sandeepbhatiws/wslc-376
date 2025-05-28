@@ -3,6 +3,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { CiShoppingCart } from "react-icons/ci";
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
 
 function classNames(...classes) {
@@ -16,6 +17,10 @@ export default function Header() {
   const hideBanner = () => {
     setHeaderBanner(false);
   }
+
+  const cartItems = useSelector((state) => {
+      return state.cart.cartItems
+  })
 
   return (
     <>
@@ -117,8 +122,9 @@ export default function Header() {
                 type="button"
                 className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
               >
-                <Link to="/view-carts">
+                <Link to="/view-carts" className='flex'>
                   <CiShoppingCart aria-hidden="true" className="size-6" />
+                  <div className='inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset'> { cartItems.length }</div>
                 </Link>
                 
               </button>

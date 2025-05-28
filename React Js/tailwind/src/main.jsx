@@ -12,7 +12,7 @@ import ViewCart from './Components/ViewCart';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-
+    
     <Routes>
       <Route element={ <RootLayout/> }>
         <Route path="/" element={<HomePage />} />
