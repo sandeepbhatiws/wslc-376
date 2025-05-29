@@ -4,6 +4,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { CiShoppingCart } from "react-icons/ci";
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 
 
 function classNames(...classes) {
@@ -27,7 +28,7 @@ export default function Header() {
       {
         headerBanner
           ?
-          <div className="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
+          <div className="relative  isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
             <div
               aria-hidden="true"
               className="absolute top-1/2 left-[max(-7rem,calc(50%-52rem))] -z-10 -translate-y-1/2 transform-gpu blur-2xl"
@@ -78,9 +79,11 @@ export default function Header() {
           ''
       }
 
+      
 
 
-      <Disclosure as="nav" className="bg-gray-800">
+
+      <Disclosure as="nav" className="bg-gray-800 sticky z-3 top-0">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">

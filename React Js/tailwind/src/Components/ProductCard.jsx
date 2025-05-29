@@ -1,7 +1,12 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { addToCart } from '../Redux Toolkit/cart';
 
 export default function ProductCard({ item }) {
+
+  const dispatch = useDispatch();
+
   return (
     <>
       <div className="group relative">
@@ -22,7 +27,7 @@ export default function ProductCard({ item }) {
           <p className="text-sm font-medium text-gray-900">{item.price}</p>
         </div>
         <div className="mt-4 flex justify-center">
-          <button type="button" class="h-10 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white cursor-pointer">
+          <button onClick={ () => dispatch(addToCart(item)) } type="button" class="h-10 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white cursor-pointer">
             Add to Cart
         </button>
         </div>
