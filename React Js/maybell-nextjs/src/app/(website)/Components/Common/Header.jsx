@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 export default function Header() {
@@ -7,13 +8,13 @@ export default function Header() {
     <header
       class="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-5"
     >
-      <a href="index.html">
+      <Link href="/">
         <img
           class="cursor-pointer sm:h-auto sm:w-auto"
-          src="./assets/images/company-logo.svg"
+          src="/images/company-logo.svg"
           alt="company logo"
         />
-      </a>
+      </Link>
 
       <div class="md:hidden">
         {/* <button @click="mobileMenuOpen = ! mobileMenuOpen"> */}
@@ -360,7 +361,7 @@ export default function Header() {
               <img
                 width="15px"
                 height="15px"
-                src="./assets/images/bed.svg"
+                src="/images/bed.svg"
                 alt="Bedroom icon"
               />
               Bedroom
@@ -388,7 +389,7 @@ export default function Header() {
               <img
                 width="15px"
                 height="15px"
-                src="./assets/images/sleep.svg"
+                src="/images/sleep.svg"
                 alt="bedroom icon"
               />
               Matrass
@@ -416,7 +417,7 @@ export default function Header() {
               <img
                 width="15px"
                 height="15px"
-                src="./assets/images/outdoor.svg"
+                src="/images/outdoor.svg"
                 alt="bedroom icon"
               />
               Outdoor
@@ -444,7 +445,7 @@ export default function Header() {
               <img
                 width="15px"
                 height="15px"
-                src="./assets/images/sofa.svg"
+                src="/images/sofa.svg"
                 alt="bedroom icon"
               />
               Sofa
@@ -472,7 +473,7 @@ export default function Header() {
               <img
                 width="15px"
                 height="15px"
-                src="./assets/images/kitchen.svg"
+                src="/images/kitchen.svg"
                 alt="bedroom icon"
               />
               Kitchen
@@ -500,7 +501,7 @@ export default function Header() {
               <img
                 width="15px"
                 height="15px"
-                src="./assets/images/food.svg"
+                src="/images/food.svg"
                 alt="Food icon"
               />
               Living room
