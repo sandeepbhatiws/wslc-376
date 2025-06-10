@@ -324,11 +324,10 @@ export default function Header() {
         </div>
 
         <div class="ml-auto flex gap-4 px-5">
-          <a
+          <Link
             class="font-light text-white duration-100 hover:text-yellow-400 hover:underline"
-            href="login.html"
-            >Login</a
-          >
+            href="/login"
+            >Login</Link>
 
           <span class="text-white">&#124;</span>
 
