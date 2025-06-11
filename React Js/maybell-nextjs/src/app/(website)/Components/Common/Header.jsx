@@ -1,7 +1,12 @@
+"use client"
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function Header() {
+
+  const [isLogin, setIsLogin] = useState(true);
+
+
   return (
     <>
       {/* <!-- Header --> */}
@@ -257,8 +262,12 @@ export default function Header() {
           </button>
         </form>
         <ul class="text-center font-medium">
-          <li class="py-2"><a href="index.html">Home</a></li>
-          <li class="py-2"><a href="catalog.html">Catalog</a></li>
+          <li class="py-2">
+            <a href="index.html">Home</a>
+          </li>
+          <li class="py-2">
+            <Link href="/categories">Categories</Link>
+          </li>
           <li class="py-2"><a href="about-us.html">About Us</a></li>
           <li class="py-2"><a href="contact-us.html">Contact Us</a></li>
         </ul>
@@ -306,11 +315,10 @@ export default function Header() {
             href="index.html"
             >Home</a
           >
-          <a
+          <Link
             class="font-light text-white duration-100 hover:text-yellow-400 hover:underline"
-            href="catalog.html"
-            >Catalog</a
-          >
+            href="/categories"
+            >Categories</Link>
           <a
             class="font-light text-white duration-100 hover:text-yellow-400 hover:underline"
             href="about-us.html"
@@ -324,18 +332,32 @@ export default function Header() {
         </div>
 
         <div class="ml-auto flex gap-4 px-5">
-          <Link
-            class="font-light text-white duration-100 hover:text-yellow-400 hover:underline"
-            href="/login"
-            >Login</Link>
 
-          <span class="text-white">&#124;</span>
+          {
+            isLogin
+            ?
+              <Link
+                class="font-light text-white duration-100 hover:text-yellow-400 hover:underline"
+                href="/login"
+                >My Account</Link>
+            :
+            <>
+              <Link
+                class="font-light text-white duration-100 hover:text-yellow-400 hover:underline"
+                href="/login"
+                >Login</Link>
 
-          <a
-            class="font-light text-white duration-100 hover:text-yellow-400 hover:underline"
-            href="sign-up.html"
-            >Sign Up</a
-          >
+              <span class="text-white">&#124;</span>
+
+              <a
+                class="font-light text-white duration-100 hover:text-yellow-400 hover:underline"
+                href="sign-up.html"
+                >Sign Up</a
+              >
+            </>
+          } 
+
+          
         </div>
       </div>
     </nav>

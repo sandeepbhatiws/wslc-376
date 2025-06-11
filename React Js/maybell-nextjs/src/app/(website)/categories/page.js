@@ -1,5 +1,6 @@
 import React from 'react'
 import CategoryListing from '../Components/CategoryListing'
+import MainLayout from '../Components/Common/MainLayout';
 
 export const metadata = {
   title: "Category Listings",
@@ -9,7 +10,10 @@ export const metadata = {
 export default function page() {
   return (
     <>
-      <CategoryListing/>
+      <MainLayout>
+        <CategoryListing/>
+      </MainLayout>
+      
     </>
   )
 }

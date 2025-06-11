@@ -1,6 +1,19 @@
-import React from 'react'
+"use client"
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
 
 export default function Login() {
+
+  const [isLogin, setIsLogin] = useState(true);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if(isLogin){
+      router.push('/');
+    }
+  })
+
   return (
     <>
     <main class="flex flex-col h-screen justify-between">
