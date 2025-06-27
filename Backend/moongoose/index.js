@@ -13,12 +13,19 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
 server.use(bodyParser.json());
-
 server.use(cors());
 
 server.get('/', (request, response) => {
     response.send('Server is working fine!');
 })
+
+
+// Admin API URLS
+require('./src/routes/admin/color.routes.js')(server);
+
+
+// Website API URL
+
 
 server.listen(8000, () => {
     mongoose.connect('mongodb://127.0.0.1:27017/mongoose_376')
