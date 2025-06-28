@@ -5,7 +5,7 @@ const router = express.Router();
 
 module.exports = server => {
 
-    router.get('/create',create);
+    router.post('/create',create);
 
     router.post('/view',view);
 
