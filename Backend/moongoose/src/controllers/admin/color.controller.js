@@ -2,23 +2,41 @@ const colorModal = require("../../models/Color");
 
 exports.create = async(request, response) => {
 
-    const data = {
-        name : request.body.name,
-        code : request.body.code,
-    }
+    try {
 
-    const inserData = new colorModal(data);
-    await inserData.save()
-    .then((result) => {
-        const output = {
-            _status : true,
-            _message : 'Record Inserted !',
-            _data : result
+        const data = {
+            name : request.body.name,
+            code : request.body.code,
         }
+        const inserData = new colorModal(data);
+        await inserData.save()
+        .then((result) => {
+            const output = {
+                _status : true,
+                _message : 'Record Inserted !',
+                _data : result
+            }
 
-        response.send(output);
-    })
-    .catch(() => {
+            response.send(output);
+        })
+        .catch((error) => {
+
+            var errorMessages = [];
+
+            for(err in error.errors){
+                errorMessages.push(error.errors[err].message);
+            }
+
+            const output = {
+                _status : false,
+                _message : 'Something went wrong !',
+                _data : null,
+                _error_messages : errorMessages
+            }
+
+            response.send(output);
+        })
+    } catch (error) {
         const output = {
             _status : false,
             _message : 'Something went wrong !',
@@ -26,7 +44,7 @@ exports.create = async(request, response) => {
         }
 
         response.send(output);
-    })
+    }
 }
 
 exports.view = async(request, response) => {
