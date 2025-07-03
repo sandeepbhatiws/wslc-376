@@ -4,11 +4,12 @@ exports.create = async(request, response) => {
 
     try {
 
-        const data = {
-            name : request.body.name,
-            code : request.body.code,
-        }
-        const inserData = new colorModal(data);
+        // const data = {
+        //     name : request.body.name,
+        //     code : request.body.code,
+        //     order : request.body.order,
+        // }
+        const inserData = new colorModal(request.body);
         await inserData.save()
         .then((result) => {
             const output = {
@@ -26,6 +27,8 @@ exports.create = async(request, response) => {
             for(err in error.errors){
                 errorMessages.push(error.errors[err].message);
             }
+
+            console.log(error)
 
             const output = {
                 _status : false,
@@ -49,16 +52,30 @@ exports.create = async(request, response) => {
 
 exports.view = async(request, response) => {
 
-    if(request.body.name){
-        var filter = {
-            name : request.body.name
-        }
-    } else {
-        var filter = {};
-    }
-    
+    // if(request.body.name){
+    //     // var filter = {
+    //     //     name : request.body.name
+    //     // }
 
-    await colorModal.find(filter)
+    // } else {
+    //     var filter = {};
+    // }
+
+    var filter = {};
+
+    // var filter = {
+    //     order : {
+    //         $gte : 5
+    //     }
+    // }
+
+    // var filter = {
+    //     order : {
+    //         $lte : 5
+    //     }
+    // }
+
+    await colorModal.find(filter).sort({ name : 'desc'}).limit(2).skip(2)
     .then((result) => {
         if(result.length > 0){
             const output = {
