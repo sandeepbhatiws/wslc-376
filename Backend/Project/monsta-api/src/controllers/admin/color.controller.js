@@ -150,13 +150,13 @@ exports.changeStatus = async(request, response) => {
         _id : {
             $in : request.body.id
         }
-    },{
-        $set : {
-            status : {
-                $not : "$status"
+    },[
+        {
+            $set: {
+                status: { $not: "$status" }
             }
         }
-    })
+    ])
     .then((result) => {
         const output = {
             _status : true,
