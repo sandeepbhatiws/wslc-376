@@ -44,14 +44,36 @@ exports.create = async(request, response) => {
 
 exports.view = async(request, response) => {
 
-    var condition = {
-        deleted_at : null
-    };
+    // Start
+    const addCondition = [
+        {
+            deleted_at : null, 
+        }
+    ];
 
-    await colorModal.find(condition)
-    .sort({
-        order : 'asc'
-    })
+    const orCondition = [];
+
+    if(request.body != undefined){
+        if(request.body.name != undefined){
+            if(request.body.name != ''){
+                var name = new RegExp(request.body.name,"i");
+                orCondition.push({ name : name }, { code : name })
+            }
+        }
+    }
+
+    if(addCondition.length > 0){
+        var filter = { $and : addCondition }
+    } else {
+        var filter = {}
+    }
+
+    if(orCondition.length > 0){
+        filter.$or = orCondition;
+    }
+    // End
+
+    await colorModal.find(filter)
     .sort({
         _id : 'desc'
     })
