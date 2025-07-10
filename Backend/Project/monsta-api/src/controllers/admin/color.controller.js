@@ -44,6 +44,19 @@ exports.create = async(request, response) => {
 
 exports.view = async(request, response) => {
 
+    // Start pagination
+    var current_page = 1;
+    var limit = 10;
+    var skip = (current_page - 1) * limit;
+
+    if(request.body != undefined){
+        var current_page = request.body.page ? request.body.page : current_page;
+        var limit  = request.body.limit ? request.body.limit : limit;
+        var skip = (current_page - 1) * limit;
+    }
+    // Ending
+
+
     // Start
     const addCondition = [
         {
@@ -73,7 +86,11 @@ exports.view = async(request, response) => {
     }
     // End
 
+    var totalRecords = await colorModal.find(filter).countDocuments();
+    var total_pages = Math.ceil(totalRecords / limit);
+
     await colorModal.find(filter)
+    .skip(skip).limit(limit)
     .sort({
         _id : 'desc'
     })
@@ -82,6 +99,11 @@ exports.view = async(request, response) => {
             const output = {
                 _status : true,
                 _message : 'Record fetched !',
+                _pagination : {
+                    current_page : current_page,
+                    total_pages : total_pages,
+                    total_records : totalRecords,
+                },
                 _data : result
             }
 
