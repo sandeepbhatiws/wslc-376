@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <title>DOM Task</title>
+        <style>
+            .row{
+                padding-top: 100px;
+                margin: auto;
+                width: 1000px;
+                /* display: flex; */
+            }
+            .color{
+                width: 500px;
+                height: 300px;
+                background-color: black;
+            }
+            button{
+                border: 0px;
+                color: white;
+                background-color: black;
+                font-weight: bold;
+                border-radius: 10px;
+                font-size: 18px;
+                padding: 15px 20px;
+            }
+            .button{
+                text-align: center;
+                width: 500px;
+                margin-top: 40px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="row">
+            <div class="color"></div>
+            <div class="button">
+                <button id="change_color" onclick="changeColor()">Change Color</button>
+            </div>
+
+            <input type="hidden" id="color_name">
+
+        </div>
+
+        <script>
+            function changeColor(){
+                var input = document.getElementById('color_name').value;
+
+                if(input == ''){
+                    document.querySelector('.color').style.backgroundColor = 'red';
+                    document.getElementById('color_name').value = 'red';
+                } else if(input == 'red'){
+                    document.querySelector('.color').style.backgroundColor = 'blue';
+                    document.getElementById('color_name').value = 'blue';
+                } else if(input == 'blue'){
+                    document.querySelector('.color').style.backgroundColor = 'green';
+                    document.getElementById('color_name').value = 'green';
+                } else if(input == 'green'){
+                    document.querySelector('.color').style.backgroundColor = 'orange';
+                    document.getElementById('color_name').value = 'orange';
+                } else {
+                    document.querySelector('.color').style.backgroundColor = 'black';
+                    document.getElementById('color_name').value = 'black';
+                }
+                
+                console.log(input);
+            }
+        </script>
+    </body>
+</html>

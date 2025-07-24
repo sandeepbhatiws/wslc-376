@@ -1,0 +1,178 @@
+
+.breadcrumbs_area {
+    padding: 40px 0;
+  }
+  @media only screen and (min-width: 768px) and (max-width: 991px) {
+    .breadcrumbs_area {
+      padding: 0 0 37px;
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .breadcrumbs_area {
+      padding: 0 0 37px;
+    }
+  }
+
+  
+.breadcrumb_content {
+    text-align: center;
+    border-bottom: 1px solid #ebebeb;
+    padding-bottom: 37px;
+  }
+  @media only screen and (min-width: 768px) and (max-width: 991px) {
+    .breadcrumb_content {
+      border-bottom: 0;
+      padding-bottom: 0;
+      border-top: 1px solid #ebebeb;
+      padding-top: 37px;
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .breadcrumb_content {
+      border-bottom: 0;
+      padding-bottom: 0;
+      border-top: 1px solid #ebebeb;
+      padding-top: 37px;
+    }
+  }
+  .breadcrumb_content ul {
+    line-height: 15px;
+  }
+  .breadcrumb_content ul li {
+    display: inline-block;
+    text-transform: capitalize;
+    font-size: 14px;
+    margin-right: 5px;
+    color: #c09578;
+  }
+  .breadcrumb_content ul li:last-child {
+    margin-right: 0;
+  }
+  .breadcrumb_content ul li a {
+    color: #242424;
+  }
+  .breadcrumb_content ul li a:hover {
+    color: #c09578;
+  }
+
+  .customer_login {
+    padding-bottom: 70px;
+  }
+  @media only screen and (max-width: 767px) {
+    .customer_login {
+      padding-bottom: 60px;
+    }
+  }
+
+  
+.account_form p {
+    margin-bottom: 20px;
+  }
+  
+  @media only screen and (max-width: 767px) {
+    .account_form.register {
+      margin-top: 57px;
+    }
+  }
+
+  .account_form h2 {
+    font-size: 30px;
+    text-transform: capitalize;
+    color: #212121;
+    font-weight: 500;
+    line-height: 22px;
+    margin-bottom: 34px;
+  }
+  @media only screen and (max-width: 767px) {
+    .account_form h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  }
+  .account_form form {
+    border: 1px solid #ebebeb;
+    padding: 23px 20px 29px;
+    border-radius: 5px;
+  }
+  .account_form label {
+    font-size: 15px;
+    font-weight: 400;
+    color: #212121;
+    cursor: pointer;
+    line-height: 12px;
+    margin-bottom: 12px;
+  }
+  .account_form label:hover {
+    color: #c09578;
+  }
+  .account_form input {
+    border: 1px solid #ebebeb;
+    height: 40px;
+    max-width: 100%;
+    padding: 0 20px;
+    background: none;
+    width: 100%;
+  }
+  .account_form button {
+    background: #c09578;
+    border: 0;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    height: 34px;
+    line-height: 21px;
+    padding: 5px 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+    margin-left: 20px;
+    border-radius: 20px;
+  }
+  .account_form button:hover {
+    background: #212121;
+  }
+  
+  .login_submit label input[type="checkbox"] {
+    width: 15px;
+    height: 13px;
+    margin-right: 3px;
+  }
+  
+  .login_submit {
+    text-align: right;
+  }
+  .login_submit a {
+    font-size: 13px;
+    color: #c09578;
+    float: left;
+    line-height: 39px;
+  }
+  @media only screen and (max-width: 767px) {
+    .login_submit a {
+      float: none;
+      line-height: 18px;
+      display: block;
+      margin-bottom: 20px;
+    }
+  }
+  
+  .customer_login {
+    padding-bottom: 70px;
+  }
+  @media only screen and (max-width: 767px) {
+    .customer_login {
+      padding-bottom: 60px;
+    }
+  }
+  
+  .account_form p {
+    margin-bottom: 20px;
+  }
+  
+  @media only screen and (max-width: 767px) {
+    .account_form.register {
+      margin-top: 57px;
+    }
+  }

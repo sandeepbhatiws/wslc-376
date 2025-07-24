@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Variables</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        
+    </head>
+<body>
+    
+    <button onclick="substraction()">Minus</button>
+    <button onclick="alert('Welcome to WsCube Tech')">Click Me</button>
+    <button onclick="addition()">Addition</button>
+    <script>
+        // alert('Welcome to WsCube Tech 1');
+
+        var x = 10;
+        var y = 5;
+
+        function addition(){
+            var z = x+y;
+            alert(z);
+        }
+
+        // addition();
+
+        function substraction(){
+            var z = x-y;
+            alert(z);
+        }
+
+
+        var name = 'Sandeep';   // variable Declaration
+        console.log(name);   // Sandeep Output
+        var name = 'Sandeep Bhati';   // Re-Declaration Variable
+        console.log(name);    // Sandeep Bhati Output
+        name = 'Sandeep';  // Varibale Value Changed
+        console.log(name); // Sandeep Output
+
+        let email = 'sandeep@gmail.com'; // Variable Declaration
+        console.log(email);
+
+        // let email = 'sandeep@gmail.com'; // Re-Declaration Variable
+        // console.log(email);   // Error
+
+        email = 'sandeepbhati@gmail.com';  // Varibale Value Changed
+        console.log(email); // sandeepbhati@gmail.com Output
+
+        const mobileNumber = 1234567890;  // Variable Declaration
+        console.log(mobileNumber);
+
+        // const mobileNumber = '123456'; // Re-Declaration Variable
+        // console.log(mobileNumber);   // Error
+
+        // mobileNumber = '123456';  // Varibale Value Changed
+        // console.log(mobileNumber); // Error Output
+
+    </script>
+</body>
+
+</html>

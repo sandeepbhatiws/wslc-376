@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Promise</title>
+</head>
+<body>
+    <script>
+        const data = fetch("https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1");
+
+        new Promise((accept,reject) => {
+            accept(data);    // Exucatable Function 
+            // reject(data);
+        })
+        .then((success) => {
+
+            new Promise((complete, incomplete) => {
+                complete(success.json());
+            })
+            .then((success) => {
+                console.log(success.results);
+                console.log('Promise is complete.');
+            })
+            .catch((error) => {
+                console.log('Promise is incomplete.');
+            })
+            
+        })
+        .catch((error) => {
+            console.log('Promise is incomplete.');
+        });
+
+
+        
+
+    </script>
+</body>
+</html>

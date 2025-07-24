@@ -1,0 +1,134 @@
+*{
+	padding: 0px;
+	margin: 0px;
+}
+a{
+	text-decoration: none;
+	color: black;
+}
+body{
+	font-family: "Inter", serif;
+}
+.outer_main{
+	width: 100%;
+}
+.outer_header{
+	width: 100%;
+	background-color: white;
+	position: sticky;
+	top: 0px;
+	border: 0px solid black;
+	box-sizing: border-box;
+}
+.header{
+	max-width: 1170px;
+	margin: auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 22px 0px;
+}
+.header_left img{
+	width: 204px;
+	height: 85px;
+}
+.header_right{
+	display: flex;
+	gap: 10px;
+}
+.outer_chat{
+	display: flex;
+	align-items: center;
+	border-width: 1px;
+	border-radius: 8px;
+	padding: 10px 18px;
+	gap: 10px;
+	background: #FFFFFF;
+	border: 1px solid #27AE60;
+	box-shadow: 0px 1px 2px 0px #1018280D;
+
+}
+.chat_logo{
+
+}
+.chat{
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+	letter-spacing: 0%;
+	color: #27AE60;
+}
+.outer_call{
+	border-radius: 8px;
+	padding: 10px 18px;
+	background: linear-gradient(93.77deg, #0ACEFE -6.36%, #2699FB 50.16%);
+	border-width: 1px;
+	border: 1px solid;
+	border-image-source: linear-gradient(93.77deg, #0ACEFE -6.36%, #2699FB 50.16%);
+	box-shadow: 0px 1px 2px 0px #1018280D;
+	font-weight: 500;
+	font-size: 16px;
+	leading-trim: Cap height;
+	line-height: 24px;
+	letter-spacing: 0px;
+	color: #FFFFFF;
+}
+
+.outer_career{
+	max-width: 1170px;
+	margin: auto;
+	display: flex;
+	justify-content: space-between;
+}
+.carrer{
+	border: 0px solid red;
+	flex-basis: 48%;
+	padding-right: 20px;
+}
+.carrer_heading{
+	font-weight: 700;
+	line-height: 68px;
+	color: #0A2134;
+}
+.carrer_heading h1{
+	font-size: 52px;
+}
+.carrer_heading span{
+	font-size: 52px;
+	background-image: url('../images/digitalborder.png');
+	background-repeat: no-repeat;
+	background-position: bottom;
+	color : #2699FB;
+}
+.carrer_heading p{
+	font-weight: 400;
+	font-size: 22px;
+	line-height: 35px;
+	padding-top: 15px;
+	color: #0A2134;
+}
+.career_points{
+	list-style: none;
+}
+.career_points li{
+	flex-basis: 100%;
+	font-weight: 400;
+	font-size: 22px;
+	padding-top: 10px;
+	line-height: 33px;
+	color: #0A2134;
+}
+.career_points li:before{
+	content: url('../images/tick.svg');
+	width: 24px;
+	height: 24px;
+	position: relative;
+	top: 5px;
+	margin-right: 10px;
+	padding-top: 10px;
+}
+.register_form{
+	background-image: url('../images/circle.png');
+	flex-basis: 552px;
+	height: 552px;
+}

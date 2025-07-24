@@ -1,0 +1,43 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.outer_faqs{
+    max-width: 1320px;
+    margin: auto;
+}
+h1{
+    padding: 30px;
+    font-size: 32px;
+    text-align: center;
+}
+.faq{
+    border: 1px solid gray;
+    margin-bottom: 15px;
+}
+.faq_question{
+    padding: 15px;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    position: relative;
+    cursor: pointer;
+}
+.faq_question span{
+    position: absolute;
+    right: 15px;
+    font-weight: bold;
+    font-size: 22px;
+}
+.faq_answer{
+    padding: 15px;
+}
+
+.faq_display{
+    display: none;
+}

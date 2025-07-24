@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>For Loop</title>
+    </head>
+    <body>
+
+
+
+        <script>
+
+            var number = Number(prompt('Enter the number'));
+
+            var status = 1;
+
+            for(i = 2; i < number; i++){
+                if(number % i == 0){
+                    status = 0;
+                    break;
+                }
+            }
+
+            if(status == 1){
+                document.write('Prime Number');
+            } else {
+                document.write('Not a Prime Number');
+            }
+        </script>
+    </body>
+</html>

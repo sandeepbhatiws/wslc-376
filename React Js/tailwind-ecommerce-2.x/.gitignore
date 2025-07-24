@@ -1,0 +1,11 @@
+node_modules/
+.npmrc
+package-lock.json
+ehthumbs.db
+Thumbs.db
+*.swp
+public
+.DS_store
+.parcel-cache
+build/
+dist/

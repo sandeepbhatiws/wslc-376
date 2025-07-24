@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+
+        <script>
+            var user = {
+                name : 'Sandeep',
+                age : 30,
+                email : 'sandeep@gmail.com'
+            }
+
+            // function displayInfo(userInfo){
+            //     console.log(userInfo.name);
+            //     console.log(userInfo.email);
+            // }
+
+            // displayInfo(user);
+
+            //  With destructuring the user data
+            function displayInfo({ name, age, email }) {
+                console.log(name);
+                console.log(age);
+            }
+
+
+            // Spread Operator
+            var name =  "jodhpur";
+            var spread = [...name];
+            // console.log(spread);
+
+            var newarray = [];
+
+            var user1 = {
+                name : 'Sandeep',
+                age : 30,
+                email : 'sandeep@gmail.com'
+            }
+
+            var newArray1 = [user1, ...newarray];
+
+            var user2 = {
+                name : 'Ravi',
+                age : 30,
+                email : 'ravi@gmail.com'
+            }
+
+            // newarray.unshift(user2);
+            var newArray1 = [...newArray1, user2];
+
+            console.log(newArray1);
+
+
+        </script>
+    </body>
+</html>

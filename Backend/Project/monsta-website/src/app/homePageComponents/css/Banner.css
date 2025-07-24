@@ -1,0 +1,61 @@
+.slick-dots {
+    position: absolute;
+    bottom: 5px !important;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.slick-slide img{
+    max-height: 470px;
+}
+
+
+.category-1,.category-2{
+    height: 290px;
+    overflow: hidden;
+    position: relative;
+}
+
+.category-1 img{
+ transition: 0.3s;
+ width: 100%;
+}
+
+.category-2 img{
+    transition: 0.3s;
+    width: 100%;
+}
+   
+
+
+.category-1:hover img{
+   transform: scale(1.1);
+}
+.category-2:hover img{
+    transform: scale(1.1);
+ }
+
+ .banner_content {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+}
+
+.banner_content p {
+    color: #242424;
+    margin-bottom: 0;
+}
+
+.banner_content h2 {
+    color: #242424;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 27px;
+    margin-bottom: 15px;
+}
+
+  

@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Login Condition</title>
+    </head>
+    <body>
+
+        <script>
+            var currentUserName = 'test';
+            var currentUserPassword =  123456;
+
+            var userName = prompt('Enter your username');
+            var userPassword = parseInt(prompt('Enter your password'));
+
+            if((userName === currentUserName) && (userPassword === currentUserPassword)){
+                document.write('Login Successfully !!');
+            } else {
+                document.write('Incorect username or password !!');
+            }
+        </script>
+    </body>
+</html>

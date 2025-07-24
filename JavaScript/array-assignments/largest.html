@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Array Questions</title>
+    </head>
+
+    <body>
+
+        <script>
+            var numbers = [32,7,54,78,3,99,75,100];   // largest value : 78
+            var largest = numbers[0];
+            var Secondlargest = numbers[0];
+            var defaultValue  = numbers[0];
+
+            for(var data of numbers){
+                if(data > largest){
+                    largest = data;
+                }
+            }
+
+            document.write('<h1>Largest Value : '+ largest +'</h1><br>');
+
+            for(var data of numbers){
+                if( data > Secondlargest && data < largest ){
+                    Secondlargest = data;
+                }
+            }
+
+            document.write('<h1>Second Largest Value : '+ Secondlargest +'</h1>');
+        </script>
+    </body>
+</html>

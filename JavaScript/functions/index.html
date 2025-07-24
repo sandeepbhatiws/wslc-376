@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <title>Functions</title>
+    </head>
+    <body>
+        <button onclick="addition()">Click Me</button>
+
+        <button onclick="add(10,20)">Add (10+20)</button>
+        <button onclick="add(20,20)">Add (20+20)</button>
+
+        <button onclick="multiplication(5,15)">Check Return Statement</button>
+
+        <script>
+            // Return Statement Function
+            function multiplication(a,b){
+                var output = addValue(a,b);
+                console.log(output);
+                var result = output * a * b;
+                console.log(result);
+            }
+
+            function addValue(x,y){
+                sum = x+y;
+                return sum;
+            }
+
+
+            // Simple Function
+            function addition(){
+                var a = 5;
+                var b = 10;
+                var sum = a+b;
+                console.log(sum);     //15
+            }
+
+            addition();
+
+
+            // Argument Function
+            function add(a,b){
+                console.log('value of a -'+ a);
+                console.log('value of b -'+ b);
+                sum = a+b;
+                console.log(sum);
+            }
+
+            add(5,5);
+
+
+            // alert();   // Simple Function
+
+            // alert('Enter the name')  // Argument functions
+        </script>
+    </body> 
+</html>

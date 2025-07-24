@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <title>DOM Task</title>
+        <style>
+            .row{
+                padding-top: 200px;
+                margin: auto;
+                width: 1000px;
+                display: flex;
+                justify-content: center;
+                align-items: flex-end;
+            }
+            button{
+                border: 0px;
+                color: white;
+                background-color: black;
+                font-weight: bold;
+                border-radius: 10px;
+                font-size: 18px;
+                padding: 15px 20px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="row">
+            <!-- <div>
+                <button onclick="onImage()">On</button>
+            </div> -->
+            <div>
+                <img src="images/off.gif" id="image"/>
+
+                <button id="onoff" onclick="onOffImage(this)">On</button>
+            </div>
+            <!-- <div>
+                <button onclick="offImage()">Off</button>
+            </div> -->
+
+        </div>
+
+        <script>
+            function onOffImage(button){
+                if(button.innerText == 'On'){
+                    document.getElementById('image').src = 'images/on.gif';
+                    button.innerText = 'Off';
+                } else {
+                    document.getElementById('image').src = 'images/off.gif';
+                    button.innerText = 'On';
+                }
+            }
+
+
+
+            // function onOffImage(){
+            //     var text = document.getElementById('onoff').innerText;
+
+            //     if(text == 'On'){
+            //         document.getElementById('image').src = 'images/on.gif';
+            //         document.getElementById('onoff').innerText = 'Off';
+            //     } else {
+            //         document.getElementById('image').src = 'images/off.gif';
+            //         document.getElementById('onoff').innerText = 'On';
+            //     }
+            // }
+
+
+
+            function onImage(){
+                document.getElementById('image').src = 'images/on.gif';
+            }
+
+            function offImage(){
+                document.getElementById('image').src = 'images/off.gif';
+            }
+        </script>
+    </body>
+</html>

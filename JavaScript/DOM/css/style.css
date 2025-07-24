@@ -1,0 +1,35 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+.row{
+    width: 1200px;
+    margin: auto;
+}
+.content{
+    margin: 15px;
+    border: 1px solid gray;
+    padding: 15px;
+    border-radius: 10px;
+}
+.button{
+    width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+button{
+    background-color: black;
+    color: white;
+    border: 0px;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.content_class{
+    background-color: black;
+    color: white;
+    border: 2px solid red;
+}

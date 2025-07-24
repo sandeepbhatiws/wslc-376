@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>Sum Even Odd Number Loop</title>
+    </head>
+    <body>
+
+        <script>
+            var number = Number(prompt('Enter the any number'));
+
+            var evenTotal = 0;
+            var oddTotal = 0;
+
+            for(i = 1; i <= number; i++){
+                if(i % 2 == 0){
+                    evenTotal += i;     // evenTotal = evenTotal +1;
+                } else {
+                    oddTotal += i;
+                }
+            }
+
+            document.write('Total Even Number '+ evenTotal +'<br>');
+
+            document.write('Total Odd Number '+ oddTotal);
+            
+        </script>
+    </body>
+</html>

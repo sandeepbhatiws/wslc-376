@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <title>Window Object Functions</title>
+    </head>
+    <body>
+
+        <button id="start_time_out">Start Time Out</button>
+        <button id="clear_time_out">Clear Time Out</button>
+
+        <button id="start_interval">Start Interval</button>
+        <button id="clear_interval">Clear Interval</button>
+
+
+        <script>
+            var functionStart = '';
+
+            document.getElementById('start_time_out').addEventListener('click', () => {
+                functionStart  = setTimeout(() => {
+                    console.log('Start');
+                },3000);
+            })
+
+            document.getElementById('clear_time_out').addEventListener('click', () => {
+                clearTimeout(functionStart);
+                // console.log('Clear');
+            })
+
+
+            var i = 0;
+            document.getElementById('start_interval').addEventListener('click', () => {
+                functionStart = setInterval(() => {
+                    i++;
+                    console.log(i);
+                }, 1000)
+                
+            })
+
+            document.getElementById('clear_interval').addEventListener('click', () => {
+                i = 0;
+                clearInterval(functionStart);
+                // i--;
+                // console.log(i);
+            })
+
+
+            // var i = 0;
+            // setInterval(() => {
+            //     i++;
+            //     console.log(i);
+            // },1000);
+
+
+            function getValue(){
+                console.log('Hello World');
+            }
+
+            // getValue();
+
+            // setTimeout(getValue,5000);
+
+            // setTimeout(() => {
+            //     console.log('Welcome')
+            // }, 5000);
+        </script>
+    </body>
+</html>

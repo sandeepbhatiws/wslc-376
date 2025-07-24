@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dropify-wrapper .dropify-message p {
+    margin: 5px 0 0;
+    font-size: 20px !important;
+}

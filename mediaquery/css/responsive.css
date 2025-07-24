@@ -1,0 +1,129 @@
+@media only screen and (min-width: 769px) and (max-width: 1024px){
+	/*body{
+		background: green;
+	}*/
+
+	.outer_menu{
+		display: none;
+	}
+	.outer_banner{
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	.outer_bank_offer{
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	.outer_category{
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+}
+
+@media only screen and (min-width: 427px) and (max-width: 768px){
+	/*body{
+		background: red;
+	}*/
+	.outer_menu{
+		display: none;
+	}
+	.outer_banner{
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	.outer_bank_offer{
+		padding-left: 15px;
+		padding-right: 15px;
+		flex-wrap: wrap;
+	}
+	.bank_offer{
+		flex-basis: 33.33%;
+/*		flex-grow: 1;*/
+	}
+	.outer_category{
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	.category{
+		flex-basis: 16.66%;
+	}
+}
+
+@media only screen and (min-width: 377px) and (max-width: 426px){
+	/*body{
+		background: purple;
+	}*/
+	.outer_menu{
+		display: none;
+	}
+	.outer_header{
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 15px;
+		gap: 18px;
+	}
+	.outer_search{
+		flex-basis: 75%;
+	}
+	.outer_banner{
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	/*.outer_bank_offer{
+		padding-left: 15px;
+		padding-right: 15px;
+		flex-wrap: wrap;
+	}
+	.bank_offer{
+		flex-basis: 33.33%;
+		flex-grow: 1;
+	}*/
+	.outer_bank_offer{
+		display: none;
+	}
+	.discount{
+		flex-direction: column;
+	}
+	.outer_category{
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	.category{
+		flex-basis: 33.33%;
+	}
+}
+
+@media only screen and (max-width: 376px){
+	/*body{
+		background: orange;
+	}*/
+	.outer_menu{
+		display: none;
+	}
+	.outer_header{
+		flex-wrap: wrap;
+		padding: 15px;
+		justify-content: center;
+	}
+	.outer_search{
+		flex-basis: 100%;
+		margin-bottom: 10px;
+	}
+	.outer_banner{
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	.outer_bank_offer{
+		display: none;
+	}
+	.discount{
+		flex-direction: column;
+	}
+	.outer_category{
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	.category{
+		flex-basis: 50%;
+	}
+}

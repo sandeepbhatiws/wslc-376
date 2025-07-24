@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Array Questions</title>
+    </head>
+
+    <body>
+
+        <script>
+            var array1 = [1,2,3];
+            var array2 = [3,4,5];
+
+            for(var data of array2){
+                if(!array1.includes(data)){
+                    array1.push(data);
+                }
+            }
+
+            console.log(array1);
+        </script>
+    </body>
+</html>
