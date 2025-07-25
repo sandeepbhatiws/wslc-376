@@ -27,6 +27,7 @@ server.use('/uploads/products', express.static('uploads/products'));
 require('./src/routes/admin/color.routes.js')(server);
 require('./src/routes/admin/material.routes.js')(server);
 require('./src/routes/admin/categories.routes.js')(server);
+require('./src/routes/admin/subCategories.routes.js')(server);
 
 
 // Website API URL
