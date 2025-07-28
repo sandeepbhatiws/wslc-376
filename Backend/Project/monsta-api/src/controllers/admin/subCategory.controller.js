@@ -103,6 +103,9 @@ exports.view = async(request, response) => {
     var total_pages = Math.ceil(totalRecords / limit);
 
     await subCategoryModal.find(filter)
+    .select('_id name parent_category_id image status order')
+    .populate('parent_category_id', 'name')
+    .populate('parent_category_ids', 'name')
     .skip(skip).limit(limit)
     .sort({
         _id : 'desc'

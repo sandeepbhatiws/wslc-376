@@ -4,40 +4,110 @@ import "dropify/dist/css/dropify.min.css";
 import "dropify/dist/js/dropify.min.js";
 import Breadcrumb from "../../common/Breadcrumb";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function AddSubCategory() {
-  useEffect(() => {
-    $(".dropify").dropify({
-      messages: {
-        default: "Drag and drop ",
-        replace: "Drag and drop ",
-        remove: "Remove",
-        error: "Oops, something went wrong"
-      }
-    });
-  }, []);
-  
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const params = useParams();
+  const updateIdState = params.id;
+  const [subCategroyDetails, setSubCategoryDetails] = useState('');
+  let [imagePath, setImagePath] = useState('');
+  const [categories, setCategories] = useState([]);
 
-  const onSubmit = (data) => {
-    
-  };
-  // update work
-  const [updateIdState, setUpdateIdState] = useState(false)
-  let updateId = useParams().id
   useEffect(() => {
-    if (updateId == undefined) {
-      setUpdateIdState(false)
+    const dropifyElement = $("#image");
+
+    if (dropifyElement.data("dropify")) {
+      dropifyElement.data("dropify").destroy();
+      dropifyElement.removeData("dropify");
     }
-    else {
-      setUpdateIdState(true)
+
+    // **Force Update Dropify Input**
+    dropifyElement.replaceWith(
+      `<input type="file" accept="image/*" name="image" id="image"
+          class="dropify" data-height="250" data-default-file="${imagePath}"/>`
+    );
+
+    // **Reinitialize Dropify**
+    $("#image").dropify();
+  }, [imagePath]); // ✅ Runs when `defaultImage` updates
+
+  useEffect(() => {
+    axios.post(import.meta.env.VITE_API_BASE_URL + import.meta.env.VITE_CATEGORY_VIEW, {
+      limit : 100
+    })
+      .then((response) => {
+        if (response.data._status == true) {
+          setCategories(response.data._data)
+        } else {
+          setCategories([]);
+        }
+      })
+      .catch(() => {
+        toast.error('Something went wrong !!');
+      })
+  }, []);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (updateIdState) {
+      axios.post(import.meta.env.VITE_API_BASE_URL + import.meta.env.VITE_SUB_CATEGORY_DETAILS, {
+        id: updateIdState
+      })
+        .then((response) => {
+          if (response.data._status == true) {
+            setImagePath(response.data._image_path+response.data._data.image);
+            setSubCategoryDetails(response.data._data)
+          } else {
+            setSubCategoryDetails('');
+          }
+        })
+        .catch(() => {
+          toast.error('Something went wrong !!');
+        })
     }
-  }, [updateId])
+  }, [updateIdState]);
+
+
+  const formHandler = (event) => {
+    event.preventDefault();
+
+    const data = event.target
+
+    if (updateIdState) {
+      var url = `http://localhost:8000/api/admin/sub-categories/update/${updateIdState}`
+
+      axios.put(url, data)
+        .then((success) => {
+          if (success.data._status == true) {
+            toast.success(success.data._message);
+            navigate('/category/sub-category/view');
+          } else {
+            toast.error(success.data._message);
+          }
+        })
+        .catch((error) => {
+          toast.error(error.data._message);
+        })
+    } else {
+      var url = 'http://localhost:8000/api/admin/sub-categories/create';
+
+      axios.post(url, data)
+        .then((success) => {
+          if (success.data._status == true) {
+            toast.success(success.data._message);
+            navigate('/category/sub-category/view');
+          } else {
+            toast.error(success.data._message);
+          }
+        })
+        .catch((error) => {
+          toast.error(error.data._message);
+        })
+    }
+  }
 
   return (
     <section className="w-full">
@@ -47,7 +117,7 @@ export default function AddSubCategory() {
           <h3 className="text-[26px] font-semibold bg-slate-100 py-3 px-4 rounded-t-md border border-slate-400">
             Add Sub Category
           </h3>
-          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" className="border border-t-0 p-3 rounded-b-md border-slate-400">
+          <form onSubmit={formHandler} autoComplete="off" className="border border-t-0 p-3 rounded-b-md border-slate-400">
             <div className="flex gap-5">
               <div className="w-1/3">
                 <label
@@ -59,28 +129,30 @@ export default function AddSubCategory() {
                 <input
                   type="file"
                   accept="image/*"
-                  {...register("categoryImage", { required: "Category image is required" })}
-                  id="categoryImage"
+                  id="image"
                   className="dropify"
                   data-height="230"
                 />
-                {errors.categoryImage && <p className="text-red-500">{errors.categoryImage.message}</p>}
               </div>
 
               <div className="w-2/3">
-              {/* Parent Category Dropdown */}
-              <div className="mb-5">
+                {/* Parent Category Dropdown */}
+                <div className="mb-5">
                   <label className="block  text-md font-medium text-gray-900">
                     Parent Category Name
                   </label>
                   <select
-                    name="parentCatSelectBox"
+                    name="parent_category_id"
                     className="border-2 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
                   >
                     <option value="">Select Category</option>
-                    <option value="Mens">Men's</option>
-                    <option value="Women">Women</option>
-                    <option value="Sale">Sale</option>
+                    {
+                      categories.map((value) => {
+                        return(
+                          <option value={value._id} selected={ value._id == subCategroyDetails.parent_category_id ? 'selected' : '' }       >{value.name}</option>
+                        )
+                      })
+                    }
                   </select>
                 </div>
 
@@ -93,12 +165,12 @@ export default function AddSubCategory() {
                   </label>
                   <input
                     type="text"
-                    {...register("categoryName", { required: "Category name is required" })}
+                    defaultValue={subCategroyDetails.name}
+                    name="name"
                     id="categoryName"
                     className="text-[19px] border-2 shadow-sm border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 px-3"
                     placeholder="Category Name"
                   />
-                  {errors.categoryName && <p className="text-red-500">{errors.categoryName.message}</p>}
                 </div>
 
                 <div className="mb-5">
@@ -110,14 +182,14 @@ export default function AddSubCategory() {
                   </label>
                   <input
                     type="text"
-                    {...register("Order", { required: "Category Order is required" })}
-                    id="categoryName"
+                    defaultValue={subCategroyDetails.order}
+                    name="order"
+                    id="order"
                     className="text-[19px] border-2 shadow-sm border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 px-3"
                     placeholder="Category Order"
                   />
-                  {errors.Order && <p className="text-red-500">{errors.Order.message}</p>}
                 </div>
-                
+
               </div>
 
 

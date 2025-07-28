@@ -265,7 +265,7 @@ export default function ViewCategory() {
                                 </div>
                               </td>
                               <td class=" py-4">
-                                {v.parent_category_id}
+                                {v.parent_category_id.name}
                               </td>
                               <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
 
@@ -297,7 +297,7 @@ export default function ViewCategory() {
                               </td>
                               <td class=" py-4">
 
-                                <Link to={`/category/update/${v._id}`} >
+                                <Link to={`/category/sub-category/update/${v._id}`} >
                                   <div className="rounded-[50%] w-[40px] h-[40px] flex items-center justify-center text-white bg-blue-700  border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     <MdModeEdit className='text-[18px]' />
                                   </div>

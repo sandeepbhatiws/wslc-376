@@ -10,8 +10,14 @@ const categorySchema = new mongoose.Schema({
     },
     parent_category_id : {
         type : String,
-        required : [true, 'Parent Category is required'],
+        // required : [true, 'Parent Category is required'],
+        ref : 'categories'
     },
+    parent_category_ids : [{
+        type : String,
+        // required : [true, 'Parent Category is required'],
+        ref : 'categories'
+    }],
     image : {
         type : String,
         default : '',
