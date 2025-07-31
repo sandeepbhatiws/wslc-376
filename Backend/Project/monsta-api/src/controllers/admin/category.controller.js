@@ -1,12 +1,47 @@
 const categoryModal = require("../../models/Category");
 require('dotenv').config()
+var slugify = require('slugify');
+
+const generateUniqueSlug = async(modal, slug) => {
+    let actualSlug = slug;
+    let count = 0;
+
+    while(await modal.findOne({slug : actualSlug})){
+        count++;
+        actualSlug = `${slug}-${count}`
+    }
+
+    return actualSlug;
+}
+
+
+// const generateUniqueSlug = async (Model, baseSlug) => {
+//     let slug = baseSlug;
+//     let count = 0;
+  
+//     // Loop to find unique slug
+//     while (await Model.findOne({ slug })) {
+//       count++;
+//       slug = `${baseSlug}-${count}`;
+//     }
+  
+//     return slug;
+// };
 
 exports.create = async(request, response) => {
 
-    console.log(request.file.filename);
-    // console.log(request.files);
-
     const saveData = request.body;
+
+    var slug = slugify(request.body.name, {
+        replacement: '-',  // replace spaces with replacement character, defaults to `-`
+        remove: undefined, // remove characters that match regex, defaults to `undefined`
+        lower: true,      // convert to lower case, defaults to `false`
+        strict: true,     // strip special characters except replacement, defaults to `false`
+        locale: 'vi',      // language code of the locale to use
+        trim: true         // trim leading and trailing replacement chars, defaults to `true`
+    });
+
+    saveData.slug = await generateUniqueSlug(categoryModal, slug);
 
     if(request.file){
         saveData.image = request.file.filename;
