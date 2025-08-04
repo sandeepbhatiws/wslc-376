@@ -28,6 +28,7 @@ require('./src/routes/admin/color.routes.js')(server);
 require('./src/routes/admin/material.routes.js')(server);
 require('./src/routes/admin/categories.routes.js')(server);
 require('./src/routes/admin/subCategories.routes.js')(server);
+require('./src/routes/admin/products.routes.js')(server);
 
 
 // Website API URL

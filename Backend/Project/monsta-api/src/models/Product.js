@@ -70,14 +70,14 @@ const productSchema = new mongoose.Schema({
         type : String,
         required : [true, 'Long description is required'],
     },
-    produc_code : {
+    product_code : {
         type : String,
         required : [true, 'Product code is required'],
         match: /^[a-zA-Z0-9]{2,15}$/,  
         minLength : [3, 'Minumum length must be 3 charater'],
         maxLength : [15, 'maximum length must be 15 charater'],
     },
-    stock : {
+    stocks : {
         type : Number,
         required : [true, 'Stock is required'],
         min : [0, 'Minimum value must be greather than 0'],

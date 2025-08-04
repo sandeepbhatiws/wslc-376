@@ -23,6 +23,11 @@ const categorySchema = new mongoose.Schema({
         type : String,
         default : '',
     },
+    product_ids : [{
+        type : String,
+        ref : 'products',
+        default : []
+    }],
     status : {
         type : Boolean,
         default : true,
