@@ -6,8 +6,66 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useForm } from 'react-hook-form';
 import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function ProductDetails() {
+
+  let [colors, setColors] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
+
+  useEffect(() => {
+    axios.post(import.meta.env.VITE_API_BASE_URL + import.meta.env.VITE_COLOR_VIEW, {
+      limit: 100
+    })
+      .then((response) => {
+        if (response.data._status == true) {
+          setColors(response.data._data)
+        } else {
+          setColors([]);
+        }
+      })
+      .catch(() => {
+        toast.error('Something went wrong !!');
+      })
+  }, []);
+
+  useEffect(() => {
+    axios.post(import.meta.env.VITE_API_BASE_URL + import.meta.env.VITE_CATEGORY_VIEW, {
+      limit: 100
+    })
+      .then((response) => {
+        if (response.data._status == true) {
+          setCategories(response.data._data)
+        } else {
+          setCategories([]);
+        }
+      })
+      .catch(() => {
+        toast.error('Something went wrong !!');
+      })
+  }, []);
+
+
+  const getSubCategories = (e) => {
+    let parentId = e.target.value;
+    axios.post(import.meta.env.VITE_API_BASE_URL + import.meta.env.VITE_SUB_CATEGORY_VIEW, {
+      parent_category_id: parentId
+    })
+      .then((response) => {
+        if (response.data._status == true) {
+          setSubCategories(response.data._data);
+        } else {
+          setSubCategories([]);
+          toast.error(response.data._message);
+        }
+      })
+      .catch(() => {
+        toast.error('Something went wrong while fetching sub-categories !!');
+      });
+  };
+
 
   useEffect(() => {
     $(".dropify").dropify({
@@ -89,28 +147,9 @@ export default function ProductDetails() {
                   id="ProductImage"
                   className="dropify"
                   data-height="160"
-                  {...register("productImage", { required: "Product Image is required" })}
                 />
-                {errors.productImage && <p className="text-red-500 text-sm">{errors.productImage.message}</p>}
 
 
-              </div>
-
-              <div className="">
-                <label
-                  htmlFor="backImage"
-                  className="block  text-md font-medium text-gray-900 text-[#76838f]"
-                >
-                  Back Image
-                </label>
-                <input
-                  type="file"
-                  id="backImage"
-                  className="dropify"
-                  data-height="160"
-                  {...register("backImage", { required: "Back Image is required" })}
-                />
-                {errors.backImage && <p className="text-red-500 text-sm">{errors.backImage.message}</p>}
               </div>
 
               <div className="">
@@ -125,9 +164,7 @@ export default function ProductDetails() {
                   id="GalleryImage"
                   className="dropify"
                   data-height="160"
-                  {...register("GalleryImage", { required: "Gallery Image is required" })}
                 />
-                {errors.GalleryImage && <p className="text-red-500 text-sm">{errors.GalleryImage.message}</p>}
               </div>
             </div>
 
@@ -143,32 +180,10 @@ export default function ProductDetails() {
                 </label>
                 <input
                   type="text"
+                  name='name'
                   className="text-[19px] border-2 shadow-sm border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 px-3"
                   placeholder='Prodct Name'
-                  {...register("Prodct_Name", { required: "Prodct Name is required" })}
                 />
-                {errors.Prodct_Name && <p className="text-red-500 text-sm">{errors.Prodct_Name.message}</p>}
-              </div>
-
-              <div className="mb-5">
-                <label
-                  htmlFor="categoryName"
-                  className="block  text-md font-medium text-gray-900 text-[#76838f]"
-                >
-                  Select Sub Category
-                </label>
-                <select
-                  {...register("Sub_Category", { required: "Sub Category is required" })}
-                  className="text-[19px] text-[#76838f] border-2 shadow-sm border-gray-300 text-gray-900 text-sm rounded-lg block w-full py-2.5 px-3">
-                  <option value="">Select Category</option>
-                  <option value="mobile">Mobile Phones</option>
-                  <option value="laptop">Laptops</option>
-                  <option value="men">Men's Wear</option>
-                  <option value="women">Women's Wear</option>
-
-                </select>
-                {errors.Sub_Category && <p className="text-red-500 text-sm">{errors.Sub_Category.message}</p>}
-
               </div>
 
               <div className="mb-5">
@@ -179,7 +194,6 @@ export default function ProductDetails() {
                   Select Meterial
                 </label>
                 <select
-                  {...register("Meterial", { required: "Meterial is required" })}
                   className="text-[19px] text-[#76838f] border-2 shadow-sm border-gray-300 text-gray-900 text-sm rounded-lg block w-full py-2.5 px-3">
                   <option value="">Nothing Selected</option>
                   <option value="">Neem</option>
@@ -192,8 +206,29 @@ export default function ProductDetails() {
                   <option value="">Babbul</option>
 
                 </select>
-                {errors.Meterial && <p className="text-red-500 text-sm">{errors.Meterial.message}</p>}
               </div>
+
+              <div className="mb-5">
+                <label
+                  htmlFor="categoryName"
+                  className="block  text-md font-medium text-gray-900 text-[#76838f]"
+                >
+                  Select Parent Category
+                </label>
+                <select
+                  onChange={getSubCategories}
+                  name='parent_category_ids'
+                  className="text-[19px] text-[#76838f] border-2 shadow-sm border-gray-300 text-gray-900 text-sm rounded-lg block w-full py-2.5 px-3">
+                  <option value="">Nothing Selected</option>
+
+                  {categories.map((category, index) => (
+                    <option key={index} value={category._id}>{category.name}</option>
+                  ))}
+
+                </select>
+              </div>
+
+
 
               <div className="mb-5">
                 <label
@@ -273,25 +308,57 @@ export default function ProductDetails() {
             <div className="right-items">
               <div className="mb-5">
                 <label
+                  htmlFor="Prodct_Code"
+                  className="block  text-md font-medium text-gray-900 text-[#76838f]"
+                >
+                  Product Code
+                </label>
+                <input
+                  type="text"
+                  name='product_code'
+                  className="text-[19px] border-2 shadow-sm border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 px-3"
+                  placeholder='Product Code'
+                />
+              </div>
+
+              <div className="mb-5">
+                <label
                   htmlFor="categoryName"
                   className="block  text-md font-medium text-gray-900 text-[#76838f]"
                 >
-                  Select Parent Category
+                  Select Color
                 </label>
                 <select
-                  {...register("Parent_Category", { required: "Parent Category is required" })}
+                  name='color_ids'
                   className="text-[19px] text-[#76838f] border-2 shadow-sm border-gray-300 text-gray-900 text-sm rounded-lg block w-full py-2.5 px-3">
                   <option value="">Nothing Selected</option>
 
-                  <option value="mobile">Mobile Phones</option>
-                  <option value="laptop">Laptops</option>
-
-                  <option value="men">Men's Wear</option>
-                  <option value="women">Women's Wear</option>
+                  {colors.map((color, index) => (
+                    <option key={index} value={color._id}>{color.name}</option>
+                  ))}
 
                 </select>
-                {errors.Parent_Category && <p className="text-red-500 text-sm">{errors.Parent_Category.message}</p>}
               </div>
+
+              <div className="mb-5">
+                <label
+                  htmlFor="categoryName"
+                  className="block  text-md font-medium text-gray-900 text-[#76838f]"
+                >
+                  Select Sub Category
+                </label>
+                <select
+                  name='sub_category_ids'
+                  className="text-[19px] text-[#76838f] border-2 shadow-sm border-gray-300 text-gray-900 text-sm rounded-lg block w-full py-2.5 px-3">
+                  <option value="">Select Category</option>
+
+                  {subCategories.map((subCategory, index) => (
+                    <option key={index} value={subCategory._id}>{subCategory.name}</option>
+                  ))}
+                </select>
+
+              </div>
+
 
               <div className="mb-5">
                 <label
@@ -315,27 +382,7 @@ export default function ProductDetails() {
                 {errors.Sub_Sub_Category && <p className="text-red-500 text-sm">{errors.Sub_Sub_Category.message}</p>}
               </div>
 
-              <div className="mb-5">
-                <label
-                  htmlFor="categoryName"
-                  className="block  text-md font-medium text-gray-900 text-[#76838f]"
-                >
-                  Select Color
-                </label>
-                <select
-                  {...register("Color", { required: "Color is required" })}
-                  className="text-[19px] text-[#76838f] border-2 shadow-sm border-gray-300 text-gray-900 text-sm rounded-lg block w-full py-2.5 px-3">
-                  <option value="">Nothing Selected</option>
 
-                  <option value="">Red</option>
-                  <option value="">Blue</option>
-
-                  <option value="">Green</option>
-                  <option value="">Gray</option>
-
-                </select>
-                {errors.Color && <p className="text-red-500 text-sm">{errors.Color.message}</p>}
-              </div>
 
               <div className="mb-5">
                 <label
@@ -425,8 +472,8 @@ export default function ProductDetails() {
           )}
 
           <button class=" mt-5 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 ">
-             {updateIdState ? "Update Product " : "Add Product"}
-             </button>
+            {updateIdState ? "Update Product " : "Add Product"}
+          </button>
 
         </form>
 

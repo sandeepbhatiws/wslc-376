@@ -134,6 +134,12 @@ exports.view = async(request, response) => {
                 orCondition.push({ name : name })
             }
         }
+
+        if(request.body.parent_category_id != undefined){
+            if(request.body.parent_category_id != ''){
+                addCondition.push({ parent_category_ids : request.body.parent_category_id })
+            }
+        }
     }
 
     if(addCondition.length > 0){
