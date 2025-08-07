@@ -56,7 +56,7 @@ const productSchema = new mongoose.Schema({
     },
     is_best_selling : {
         type : Boolean,
-        default : false,
+        default : false,  // 1 - Yes 0 - No
     },
     is_up_sell : {
         type : Boolean,
@@ -73,7 +73,7 @@ const productSchema = new mongoose.Schema({
     product_code : {
         type : String,
         required : [true, 'Product code is required'],
-        match: /^[a-zA-Z0-9]{2,15}$/,  
+        match: /^[a-zA-Z 0-9]{2,15}$/,  
         minLength : [3, 'Minumum length must be 3 charater'],
         maxLength : [15, 'maximum length must be 15 charater'],
     },

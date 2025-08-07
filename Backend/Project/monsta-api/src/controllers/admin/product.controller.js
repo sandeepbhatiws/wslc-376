@@ -333,7 +333,8 @@ exports.update = async(request, response) => {
 
         response.send(output);
     })
-    .catch(() => {
+    .catch((error) => {
+        console.log(error)
         const output = {
             _status : false,
             _message : 'Something went wrong !',
