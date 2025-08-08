@@ -32,6 +32,7 @@ require('./src/routes/admin/products.routes.js')(server);
 
 
 // Website API URL
+require('./src/routes/website/user.routes.js')(server);
 
 
 server.listen(process.env.PORT, () => {
