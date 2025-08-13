@@ -23,9 +23,9 @@ module.exports = server => {
 
     const singleImage = upload.single('image');
 
-    router.get('/register', upload.none(), register);
+    router.post('/register', upload.none(), register);
 
-    router.get('/login', upload.none(), login);
+    router.post('/login', upload.none(), login);
 
     server.use('/api/website/users', router);
 }

@@ -1,35 +1,144 @@
+const user = require('../../models/user');
 require('dotenv').config()
 var jwt = require('jsonwebtoken');
+var bcrypt = require('bcrypt');
+const saltRounds = 10;
 
-exports.register = (request, response) => {
+//Register API
+exports.register = async(request, response) => {
 
-    var token = jwt.sign({ userData : 'Welcome to WS' }, process.env.KEY_VALUE, {
-        expiresIn: '10000' // expires in 1 hour
-    });
+    var existingUser = await user.findOne({ email : request.body.email, deleted_at: '' });
 
-    const output = {
-        _status : true,
-        _message : 'Register User !',
-        _data : token
+    if(existingUser){
+        const output = {
+            _status: false,
+            _message: 'Email already exists!',
+            _data: null
+        }
+        return response.send(output);
     }
 
-    response.send(output);
-};
-
-exports.login = (request, response) => {
-
-    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRGF0YSI6IldlbGNvbWUgdG8gV1MiLCJpYXQiOjE3NTQ2NjQ0NjAsImV4cCI6MTc1NDY2NDQ3MH0.TgOQ9QDTBrnUd5GbblyFOFpokuyprQuiL44HLyicvdU';
-
-    var verify = jwt.verify(token, process.env.KEY_VALUE);
-
-    const output = {
-        _status : true,
-        _message : 'Login User !',
-        _data : verify
+    const data = {
+        name: request.body.name,
+        email: request.body.email, 
+        password: await bcrypt.hash(request.body.password, saltRounds),
+        mobile_number: request.body.mobile_number,
     }
 
-    response.send(output);
+    try {
+        const inserData = new user(data);
+        await inserData.save()
+        .then((result) => {
+
+            var token = jwt.sign({ userData : result }, process.env.KEY_VALUE);
+
+            const output = {
+                _status : true,
+                _message : 'User Registered !',
+                _token : token,
+                _data : result
+            }
+
+            response.send(output);
+        })
+        .catch((error) => {
+
+            var errorMessages = [];
+
+            for(err in error.errors){
+                errorMessages.push(error.errors[err].message);
+            }
+
+            const output = {
+                _status : false,
+                _message : 'Something went wrong !',
+                _data : null,
+                _error_messages : errorMessages
+            }
+
+            response.send(output);
+        })
+    } catch (error) {
+        const output = {
+            _status : false,
+            _message : 'Something went wrong !',
+            _data : null
+        }
+
+        response.send(output);
+    }
 };
+
+//Login API
+exports.login = async(request, response) => {
+
+    var existingUser = await user.findOne({ email : request.body.email, deleted_at: '' });
+
+    if(!existingUser){
+        const output = {
+            _status: false,
+            _message: 'Invalid email id',
+            _data: null
+        }
+        return response.send(output);
+    }
+
+    if(await bcrypt.compare(request.body.password, existingUser.password)) {
+        var token = jwt.sign({ userData : existingUser }, process.env.KEY_VALUE);
+
+        if(existingUser.status == false){
+            const output = {
+                _status: false,
+                _message: 'Your account is deactivated. Please contact support.',
+                _data: null 
+            }
+            return response.send(output);   
+        }
+
+        const output = {
+            _status : true,
+            _message : 'Login successful !',
+            _token : token,
+            _data : existingUser
+        }
+
+        response.send(output);
+    } else {
+        const output = {
+            _status: false,
+            _message: 'Invalid password',
+            _data: null
+        }
+        response.send(output);
+    }
+};
+
+// exports.register = (request, response) => {
+
+
+//     const output = {
+//         _status : true,
+//         _message : 'Register User !',
+//         _data : token
+//     }
+
+//     response.send(output);
+// };
+
+// exports.login = (request, response) => {
+
+//     var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRGF0YSI6IldlbGNvbWUgdG8gV1MiLCJpYXQiOjE3NTQ2NjQ0NjAsImV4cCI6MTc1NDY2NDQ3MH0.TgOQ9QDTBrnUd5GbblyFOFpokuyprQuiL44HLyicvdU';
+
+//     var verify = jwt.verify(token, process.env.KEY_VALUE);
+
+//     const output = {
+//         _status : true,
+//         _message : 'Login User !',
+//         _data : verify
+//     }
+
+//     response.send(output);
+// };
 
 
 
@@ -84,44 +193,6 @@ exports.login = (request, response) => {
 //         saveData.image = request.file.filename;
 //     }
 
-//     try {
-//         const inserData = new categoryModal(saveData);
-//         await inserData.save()
-//         .then((result) => {
-//             const output = {
-//                 _status : true,
-//                 _message : 'Record Inserted !',
-//                 _data : result
-//             }
-
-//             response.send(output);
-//         })
-//         .catch((error) => {
-
-//             var errorMessages = [];
-
-//             for(err in error.errors){
-//                 errorMessages.push(error.errors[err].message);
-//             }
-
-//             const output = {
-//                 _status : false,
-//                 _message : 'Something went wrong !',
-//                 _data : null,
-//                 _error_messages : errorMessages
-//             }
-
-//             response.send(output);
-//         })
-//     } catch (error) {
-//         const output = {
-//             _status : false,
-//             _message : 'Something went wrong !',
-//             _data : null
-//         }
-
-//         response.send(output);
-//     }
 // }
 
 // exports.view = async(request, response) => {
