@@ -113,6 +113,188 @@ exports.login = async(request, response) => {
     }
 };
 
+// View Profile API
+exports.viewProfile = async(request, response) => {
+
+    var token = request.headers.authorization;
+
+    if (!token) {
+        return response.status(401).send({
+            _status: false,
+            _message: 'No token provided',
+            _data: null
+        });
+    }
+
+    var token = token.split(' ')[1]; // Remove 'Bearer ' prefix if present
+
+    try {
+        var decoded = jwt.verify(token, process.env.KEY_VALUE);
+
+        var userData = await user.findById(decoded.userData._id);  
+        
+        if (!userData) {
+            return response.send({  
+                _status: false,
+                _message: 'User not found',
+                _data: null
+            });
+        }   
+
+        const output = {
+            _status: true,
+            _message: 'Profile fetched successfully',
+            _data: userData
+        };
+
+        response.send(output);
+    } catch (error) {  
+        return response.send({
+            _status: false,
+            _message: 'Failed to authenticate token',
+            _data: null
+        });
+    }
+};
+
+// Update Profile API
+exports.updateProfile = async(request, response) => {
+    var token = request.headers.authorization;
+
+    if (!token) {
+        return response.send({
+            _status: false,
+            _message: 'No token provided',
+            _data: null
+        });
+    }
+
+    var token = token.split(' ')[1]; // Remove 'Bearer ' prefix if present
+
+    try {
+        var decoded = jwt.verify(token, process.env.KEY_VALUE);
+
+        var userData = await user.findById(decoded.userData._id);  
+        
+        if (!userData) {
+            return response.send({  
+                _status: false,
+                _message: 'User not found',
+                _data: null
+            });
+        }   
+
+        // // Update user data
+        // userData.name = request.body.name || userData.name;
+        // userData.email = request.body.email || userData.email;
+        // userData.mobile_number = request.body.mobile_number || userData.mobile_number;
+
+        const updateData= request.body;
+
+        if(request.file){
+            updateData.image = request.file.filename;
+        }
+
+       var userData = await user.updateOne({
+            _id : decoded.userData._id
+        },{
+            $set : updateData
+        });
+
+        const output = {
+            _status: true,
+            _message: 'Profile updated successfully',
+            _data: userData
+        };
+
+        response.send(output);
+    } catch (error) {  
+        return response.send({
+            _status: false,
+            _message: 'Failed to authenticate token',
+            _data: null
+        });
+    }
+};
+
+// Change Password API
+exports.changePassword = async(request, response) => {
+    var token = request.headers.authorization;
+
+    if (!token) {
+        return response.send({
+            _status: false,
+            _message: 'No token provided',
+            _data: null
+        });
+    }
+
+    var token = token.split(' ')[1]; // Remove 'Bearer ' prefix if present
+
+    try {
+        var decoded = jwt.verify(token, process.env.KEY_VALUE);
+
+        var userData = await user.findById(decoded.userData._id);  
+        
+        if (!userData) {
+            return response.send({  
+                _status: false,
+                _message: 'User not found',
+                _data: null
+            });
+        }   
+
+        var verifyPassword = await bcrypt.compare(request.body.current_password, userData.password);
+        if(!verifyPassword) {
+            return response.send({
+                _status: false,
+                _message: 'Current password is incorrect',
+                _data: null
+            });
+        }
+
+        if(request.body.current_password === request.body.new_password) {
+            return response.send({  
+                _status: false,
+                _message: 'New password cannot be the same as current password',   
+                _data: null
+            }); 
+        }
+
+        if(request.body.new_password != request.body.confirm_password) {
+            return response.send({  
+                _status: false,
+                _message: 'New password and confirm password must be same',   
+                _data: null
+            }); 
+        }
+        
+        var password = await bcrypt.hash(request.body.new_password, saltRounds);
+
+        var userData = await user.updateOne({
+            _id : decoded.userData._id
+        },{
+            $set : {
+                password: password
+            }
+        });
+
+        const output = {
+            _status: true,
+            _message: 'Change Password successfully',
+            _data: userData
+        };
+
+        response.send(output);
+    } catch (error) {  
+        return response.send({
+            _status: false,
+            _message: 'Failed to authenticate token',
+            _data: null
+        });
+    }
+};
+
 // exports.register = (request, response) => {
 
 

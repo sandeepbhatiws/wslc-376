@@ -1,5 +1,5 @@
 const express = require('express');
-const { register, login } = require('../../controllers/website/user.controller');
+const { register, login, viewProfile, updateProfile, changePassword } = require('../../controllers/website/user.controller');
 const multer = require('multer')
 const uploads = multer({ dest: 'uploads/users' })
 const path = require('path');
@@ -26,6 +26,12 @@ module.exports = server => {
     router.post('/register', upload.none(), register);
 
     router.post('/login', upload.none(), login);
+
+    router.post('/view-profile', upload.none(), viewProfile);
+
+    router.post('/update-profile', singleImage, updateProfile);
+
+    router.post('/change-password', upload.none(), changePassword);
 
     server.use('/api/website/users', router);
 }
