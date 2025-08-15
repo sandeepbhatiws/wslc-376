@@ -3,6 +3,7 @@ require('dotenv').config()
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
+const nodemailer = require("nodemailer");
 
 //Register API
 exports.register = async(request, response) => {
@@ -294,6 +295,120 @@ exports.changePassword = async(request, response) => {
         });
     }
 };
+
+// Forgot Password API
+exports.forgotPassword = async(request, response) => {
+    var existingUser = await user.findOne({ email : request.body.email, deleted_at: '' });
+    if(!existingUser){
+        return response.send({
+            _status: false,
+            _message: 'Email not found',
+            _data: null
+        });
+    }
+
+    // Generate a random token
+    var token = jwt.sign({ userData: existingUser }, process.env.KEY_VALUE, {
+        expiresIn: '1h' // Token valid for 1 hour
+    });
+
+    // Create a transporter for sending emails 
+    var transporter = nodemailer.createTransport({
+        service: 'gmail', // Use your email service
+        auth: {
+            user: process.env.EMAIL_USER, // Your email address
+            pass: process.env.EMAIL_PASS  // Your email password
+        }
+    });
+
+    // Email options
+    var mailOptions = {
+        from: 'Node Project <'+process.env.EMAIL_USER+'>', // Sender address
+        to: existingUser.email, // Recipient address
+        subject: 'Password Reset Request',
+        text: `You requested a password reset. Click the link below to reset your password:\n\nhttp://localhost:3000/reset-password?token=${token}`
+    };
+
+    // Send the email
+    await transporter.sendMail(mailOptions, function(error, info) {
+        if (error) {
+            return response.send({ 
+                _status: false,
+                _message: 'Error sending email',
+                _data: error
+            });
+        } else {
+            return response.send({  
+                _status: true,
+                _message: 'Password reset email sent successfully',
+                _data: null
+            });
+        }           
+    });
+};
+
+// Reset Password API
+exports.resetPassword = async(request, response) => {
+    var token = request.headers.authorization;
+
+    if (!token) {
+        return response.send({
+            _status: false,
+            _message: 'No token provided',
+            _data: null
+        });
+    }
+
+    var token = token.split(' ')[1]; // Remove 'Bearer ' prefix if present
+
+    try {
+        var decoded = jwt.verify(token, process.env.KEY_VALUE);
+
+        var userData = await user.findById(decoded.userData._id);  
+        
+        if (!userData) {
+            return response.send({  
+                _status: false,
+                _message: 'User not found',
+                _data: null
+            });
+        }
+
+        if(request.body.new_password != request.body.confirm_password) {
+            return response.send({  
+                _status: false,
+                _message: 'New password and confirm password must be same',   
+                _data: null
+            }); 
+        }
+        
+        var password = await bcrypt.hash(request.body.new_password, saltRounds);
+
+        var userData = await user.updateOne({
+            _id : decoded.userData._id
+        },{
+            $set : {
+                password: password
+            }
+        });
+
+        const output = {
+            _status: true,
+            _message: 'Reset Password successfully',
+            _data: userData
+        };
+
+        response.send(output);
+    } catch (error) {  
+        return response.send({
+            _status: false,
+            _message: 'Failed to authenticate token',
+            _data: null
+        });
+    }
+};
+
+
 
 // exports.register = (request, response) => {
 
