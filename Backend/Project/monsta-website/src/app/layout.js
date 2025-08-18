@@ -4,8 +4,8 @@ import Footer from "./commanComponents/Footer";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./globals.css";
-
-
+import MyApp from './MyApp';
+import { ToastContainer } from 'react-toastify';
 
 export const metadata = {
   title: "Home",
@@ -16,9 +16,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-      <Header/>
-        {children}
-        <Footer/>
+        <MyApp>
+          <Header/>
+          <ToastContainer/>
+          {children}
+          <Footer/>
+        </MyApp>
       </body>
     </html>
   );

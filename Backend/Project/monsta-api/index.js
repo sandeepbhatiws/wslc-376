@@ -29,7 +29,7 @@ require('./src/routes/admin/material.routes.js')(server);
 require('./src/routes/admin/categories.routes.js')(server);
 require('./src/routes/admin/subCategories.routes.js')(server);
 require('./src/routes/admin/products.routes.js')(server);
-
+require('./src/routes/admin/user.routes.js')(server);
 
 // Website API URL
 require('./src/routes/website/user.routes.js')(server);

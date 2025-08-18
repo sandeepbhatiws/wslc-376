@@ -8,7 +8,7 @@ const nodemailer = require("nodemailer");
 //Register API
 exports.register = async(request, response) => {
 
-    var existingUser = await user.findOne({ email : request.body.email, deleted_at: '', role_type : 'User' });
+    var existingUser = await user.findOne({ email : request.body.email, deleted_at: '', role_type : 'Admin' });
 
     if(existingUser){
         const output = {
@@ -24,7 +24,7 @@ exports.register = async(request, response) => {
         email: request.body.email, 
         password: await bcrypt.hash(request.body.password, saltRounds),
         mobile_number: request.body.mobile_number,
-        role_type : 'User'
+        role_type : 'Admin'
     }
 
     try {
@@ -74,7 +74,7 @@ exports.register = async(request, response) => {
 //Login API
 exports.login = async(request, response) => {
 
-    var existingUser = await user.findOne({ email : request.body.email, deleted_at: '', role_type : 'User' });
+    var existingUser = await user.findOne({ email : request.body.email, deleted_at: '', role_type : 'Admin' });
 
     if(!existingUser){
         const output = {
@@ -133,7 +133,7 @@ exports.viewProfile = async(request, response) => {
     try {
         var decoded = jwt.verify(token, process.env.KEY_VALUE);
 
-        var userData = await user.findOne({ _id: decoded.userData._id, role_type : 'User' });  
+        var userData = await user.findOne({ _id: decoded.userData._id, role_type : 'Admin' });  
         
         if (!userData) {
             return response.send({  
@@ -176,7 +176,7 @@ exports.updateProfile = async(request, response) => {
     try {
         var decoded = jwt.verify(token, process.env.KEY_VALUE);
 
-        var userData = await user.findOne({ _id: decoded.userData._id, role_type : 'User' });
+        var userData = await user.findOne({ _id: decoded.userData._id, role_type : 'Admin' });
         
         if (!userData) {
             return response.send({  
@@ -236,7 +236,7 @@ exports.changePassword = async(request, response) => {
     try {
         var decoded = jwt.verify(token, process.env.KEY_VALUE);
 
-        var userData = await user.findOne({ _id: decoded.userData._id, role_type : 'User' });
+        var userData = await user.findOne({ _id: decoded.userData._id, role_type : 'Admin' });
         
         if (!userData) {
             return response.send({  
@@ -299,7 +299,7 @@ exports.changePassword = async(request, response) => {
 
 // Forgot Password API
 exports.forgotPassword = async(request, response) => {
-    var existingUser = await user.findOne({ email : request.body.email, deleted_at: '',role_type: 'User' });
+    var existingUser = await user.findOne({ email : request.body.email, deleted_at: '',role_type: 'Admin' });
     if(!existingUser){
         return response.send({
             _status: false,
@@ -365,7 +365,7 @@ exports.resetPassword = async(request, response) => {
     try {
         var decoded = jwt.verify(token, process.env.KEY_VALUE);
 
-        var userData = await user.findOne({ _id: decoded.userData._id, role_type : 'User' });
+        var userData = await user.findOne({ _id: decoded.userData._id, role_type : 'Admin' });
         
         if (!userData) {
             return response.send({  

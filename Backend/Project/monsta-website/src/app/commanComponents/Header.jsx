@@ -11,6 +11,7 @@ import { RxCross2 } from "react-icons/rx";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Accordion from 'react-bootstrap/Accordion';
 import { FaAngleDown } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 
 export default function Header() {
     const [showCart, setShowCart] = useState(false);
@@ -22,6 +23,10 @@ export default function Header() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const isLoggedIn = useSelector((state) => {
+        return state.login.token;
+    })
 
     return (
         <>
@@ -36,13 +41,24 @@ export default function Header() {
                                 </div>
                             </Col>
                             <Col lg={5} md={12}>
-
-                                <Link href={"/login-register"}>
-                                    <ul className="auth d-flex justify-content-end">
-                                        <li>Login &nbsp;/</li>
-                                        <li>Register</li>
-                                    </ul>
-                                </Link>
+                                
+                                {
+                                    isLoggedIn
+                                    ?
+                                    <Link href={"/my-dashboard"}>
+                                        <ul className="auth d-flex justify-content-end">
+                                            <li>My Dashboard</li>
+                                        </ul>
+                                    </Link>
+                                    :
+                                    <Link href={"/login-register"}>
+                                        <ul className="auth d-flex justify-content-end">
+                                            <li>Login &nbsp;/</li>
+                                            <li>Register</li>
+                                        </ul>
+                                    </Link>
+                                }
+                                
 
                             </Col>
                         </Row>

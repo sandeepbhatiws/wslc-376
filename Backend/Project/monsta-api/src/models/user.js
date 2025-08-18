@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Mobile number is required'],
         match: /^[0-9]{8,15}$/,
     },
+    role_type : {
+        type : String,
+        required: [true, 'Type is required'],
+        enum : ['Admin', 'User']
+    },
     image : {
         type : String,
         default : '',
