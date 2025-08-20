@@ -5,11 +5,16 @@ import { useRouter } from 'next/navigation'
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
+import { useDispatch } from 'react-redux';
+import { userDetails } from '../Redux Toolkit/loginSlice';
 
 export default function page() {
 
     const router = useRouter();
     const [formSubmit , setFormSubmit] = useState(false);
+    const [loginFormSubmit , setLoginFormSubmit] = useState(false);
+
+    const dispatch = useDispatch();
 
     const registerUser = (event) => {
         event.preventDefault();
@@ -20,9 +25,12 @@ export default function page() {
             if(result.data._status == true){
                 toast.success(result.data._message);
                 setFormSubmit(true);
-                Cookies.set('token',result.data._token);
-                Cookies.set('user',JSON.stringify(result.data._data));
-                console.log(result.data);
+                dispatch(userDetails({
+                    user : result.data._data,
+                    token : result.data._token
+                }))
+                // Cookies.set('token',result.data._token);
+                // Cookies.set('user',JSON.stringify(result.data._data));
                 router.push('/my-dashboard');
             } else {
                 toast.error(result.data._message);
@@ -32,6 +40,33 @@ export default function page() {
         .catch(() => {
             toast.error('Something Went Wrong');
             setFormSubmit(false);
+        })
+    }
+
+    const loginUser = (event) => {
+        event.preventDefault();
+        setLoginFormSubmit(true);
+
+        axios.post('http://localhost:8000/api/website/users/login', event.target)
+        .then((result) => {
+            if(result.data._status == true){
+                toast.success(result.data._message);
+                setLoginFormSubmit(true);
+                dispatch(userDetails({
+                    user : result.data._data,
+                    token : result.data._token
+                }))
+                // Cookies.set('token',result.data._token);
+                // Cookies.set('user',JSON.stringify(result.data._data));
+                router.push('/my-dashboard');
+            } else {
+                toast.error(result.data._message);
+                setLoginFormSubmit(false);
+            }
+        })
+        .catch(() => {
+            toast.error('Something Went Wrong');
+            setLoginFormSubmit(false);
         })
     }
 
@@ -62,14 +97,14 @@ export default function page() {
                 <div className="col-lg-6 col-md-6">
                     <div className="account_form">
                         <h2>login</h2>
-                        <form action="#">
+                        <form onSubmit={ loginUser } autoComplete='on'>
                             <p>   
                                 <label>Username or email <span>*</span></label>
-                                <input type="text"/>
+                                <input type="text" name='email'/>
                              </p>
                              <p>   
                                 <label>Passwords <span>*</span></label>
-                                <input type="password"/>
+                                <input type="password" name='password'/>
                              </p>   
                             <div className="login_submit">
                                <a href="#">Lost your password?</a>
@@ -77,7 +112,11 @@ export default function page() {
                                     <input id="remember" type="checkbox"/>
                                     Remember me
                                 </label>
-                                <button type="submit">login</button>
+                                <button type="submit" disabled={ loginFormSubmit ? 'disabled' : '' }>
+                                    {
+                                        loginFormSubmit ? 'Loading....' : 'Login' 
+                                    }
+                                </button>
                                 
                             </div>
 
