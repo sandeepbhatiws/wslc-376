@@ -34,6 +34,7 @@ require('./src/routes/admin/dashboard.routes.js')(server);
 
 // Website API URL
 require('./src/routes/website/user.routes.js')(server);
+require('./src/routes/website/order.routes.js')(server);
 
 
 server.listen(process.env.PORT, () => {
