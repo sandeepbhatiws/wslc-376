@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { useRazorpay, RazorpayOrderOptions } from "react-razorpay";
 
+
 export default function page() {
 
     const userToken = useSelector((state) => {
@@ -19,8 +20,47 @@ export default function page() {
     const placeOrder = (event) => {
         event.preventDefault();
 
-        axios.post('http://localhost:8000/api/website/orders/order-placed', {
-            net_amount: 200
+        var productInfo = [
+            {
+                id : 1,
+                name : 'Product Name',
+                price : 100,
+                qty : 2,
+                description : 'Product Description',
+                image : '2.jpg'
+            },
+            {
+                id : 2,
+                name : 'Product Name',
+                price : 100,
+                qty : 2,
+                description : 'Product Description',
+                image : '2.jpg'
+            }
+        ]
+
+        var billing_address = {
+            name : event.target.name.value,
+            mobile_number : event.target.mobile_number.value,
+            billing_name : event.target.billing_name.value,
+            billing_email : event.target.billing_email.value,
+            billing_mobile : event.target.billing_mobile.value,
+        }
+
+        var shipping_address = {
+            name : event.target.name.value,
+            mobile_number : event.target.mobile_number.value,
+            shipping_name : event.target.billing_name.value,
+            shipping_email : event.target.billing_email.value,
+            shipping_mobile : event.target.billing_mobile.value,
+        }
+
+        axios.post(process.env.API_URL, {
+            product_info : productInfo,
+            billing_address : billing_address,
+            shipping_address : shipping_address,
+            net_amount: 200,
+            total_amount : 200
         }, {
             headers: {
                 'Authorization': `Bearer ${userToken}`
@@ -48,6 +88,8 @@ export default function page() {
             order_id:id, // Generate order_id on server
             handler: (response) => {
                 console.log(response);
+                orderStatusChange(response.razorpay_payment_id, response.razorpay_order_id)
+                // razorpay_payment_id: 'pay_RAmg8LDHomCbvn', razorpay_order_id: 'order_RAmfPd6WkvWs7V'
                 toast.success("Payment Successful!");
             },
             prefill: {
@@ -61,8 +103,44 @@ export default function page() {
         };
 
         const razorpayInstance = new Razorpay(options);
+
+        razorpayInstance.on("payment.failed", function (response) {
+            toast.error('Payment Failed !!')
+            console.log(response);
+            orderStatusChange(response.error.metadata.payment_id, response.error.metadata.order_id)
+            // alert(response.error.code);
+            // alert(response.error.description);
+            // alert(response.error.source);
+            // alert(response.error.step);
+            // alert(response.error.reason);
+            // alert(response.error.metadata.order_id);
+            // alert(response.error.metadata.payment_id);
+        });
+
         razorpayInstance.open();
     };
+
+    var orderStatusChange = (payment_id, order_id) => {
+        axios.post('http://localhost:8000/api/website/orders/change-status', {
+            payment_id : payment_id,
+            order_id : order_id
+        }, {
+            headers: {
+                'Authorization': `Bearer ${userToken}`
+            }
+        })
+        .then((result) => {
+            if (result.data._status == true) {
+                toast.success(result.data._messsage);
+            } else {
+                toast.error(result.data._messsage);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            toast.error('Something went wrong !');
+        })
+     }
 
     return (
         <>

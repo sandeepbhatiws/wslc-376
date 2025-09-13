@@ -10,6 +10,10 @@ const orderSchema = new mongoose.Schema({
         type : String,
         default : '',
     },
+    payment_id : {
+        type : String,
+        default : '',
+    },
     order_number : {
         type : String,
         default : '',
@@ -19,11 +23,11 @@ const orderSchema = new mongoose.Schema({
         default : Date.now()
     },
     shipping_address : {
-        type : String,
+        type : Object,
         default : '',
     },
     billing_address : {
-        type : String,
+        type : Object,
         default : '',
     },
     product_info : {

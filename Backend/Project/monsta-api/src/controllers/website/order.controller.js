@@ -106,66 +106,41 @@ exports.orderPlaced = async(request, response) => {
 // Change Status API
 exports.changeStatus = async(request, response) => {
 
+    var paymentInfo = await instance.payments.fetch(request.body.payment_id);
 
-//     razorpay_payment_id
-// : 
-// "pay_RA0hz9iBtoDQja"
-
-
-    var token = request.headers.authorization;
-
-    if (!token) {
-        return response.send({
-            _status: false,
-            _message: 'No token provided',
-            _data: null
-        });
-    }
-
-    var token = token.split(' ')[1]; // Remove 'Bearer ' prefix if present
-
-    try {
-        var decoded = jwt.verify(token, process.env.KEY_VALUE);
-
-        var userData = await user.findOne({ _id: decoded.userData._id, role_type : 'User' });
-        
-        if (!userData) {
-            return response.send({  
-                _status: false,
-                _message: 'User not found',
-                _data: null
-            });
-        }   
-
-        // // Update user data
-        // userData.name = request.body.name || userData.name;
-        // userData.email = request.body.email || userData.email;
-        // userData.mobile_number = request.body.mobile_number || userData.mobile_number;
-
-        const updateData= request.body;
-
-        if(request.file){
-            updateData.image = request.file.filename;
+    if(paymentInfo.status == 'captured'){
+        var orderdata = {
+            payment_id : request.body.payment_id,
+            payment_status : 2,
+            order_status : 2
         }
+    } else {
+        var orderdata = {
+            payment_id : request.body.payment_id,
+            payment_status : 3,
+            order_status : 3
+        }
+    }
 
-       var userData = await user.updateOne({
-            _id : decoded.userData._id
-        },{
-            $set : updateData
-        });
+    await order.updateOne({
+        order_id : request.body.order_id
+    }, {
+        $set : orderdata
+    }).then(async() => {
 
-        const output = {
+        var orderInfo = await order.findOne({ order_id : request.body.order_id });
+
+        return response.send({
             _status: true,
-            _message: 'Profile updated successfully',
-            _data: userData
-        };
-
-        response.send(output);
-    } catch (error) {  
+            _message: 'Order status changed succussfully !',
+            _data: orderInfo
+        });
+    })
+    .catch(() => {
         return response.send({
             _status: false,
-            _message: 'Failed to authenticate token',
-            _data: null
+            _message: 'Something went wrong',
+            _data: ''
         });
-    }
+    });
 };
